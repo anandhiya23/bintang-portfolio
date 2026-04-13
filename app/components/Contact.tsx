@@ -52,14 +52,23 @@ export default function Contact() {
 
           <div className="mt-10 md:mt-12 space-y-4">
             {[
-              { label: "Email", value: "hello@bintang.dev" },
-              { label: "Location", value: "Jakarta, Indonesia" },
+              { label: "Email", value: "bintangananandhiya23@gmail.com", href: "mailto:bintangananandhiya23@gmail.com" },
+              { label: "WhatsApp", value: "+62 811 892 313", href: "https://wa.me/62811892313" },
+              { label: "LinkedIn", value: "bintanganandhiya", href: "https://www.linkedin.com/in/bintanganandhiya/" },
+              { label: "GitHub", value: "anandhiya23", href: "https://github.com/anandhiya23" },
+              { label: "Location", value: "Jakarta, Indonesia", href: null },
             ].map((item) => (
               <div key={item.label}>
                 <span style={labelStyle}>{item.label}</span>
-                <span style={{ fontFamily: "var(--font-inter), sans-serif", fontSize: "14px", color: "var(--color-on-surface)" }}>
-                  {item.value}
-                </span>
+                {item.href ? (
+                  <a href={item.href} style={{ fontFamily: "var(--font-inter), sans-serif", fontSize: "14px", color: "var(--color-on-surface)", textDecoration: "none" }}>
+                    {item.value}
+                  </a>
+                ) : (
+                  <span style={{ fontFamily: "var(--font-inter), sans-serif", fontSize: "14px", color: "var(--color-on-surface)" }}>
+                    {item.value}
+                  </span>
+                )}
               </div>
             ))}
           </div>

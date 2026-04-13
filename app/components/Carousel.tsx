@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useCallback } from "react";
 import Image from "next/image";
 
 type Props = {
@@ -20,8 +20,8 @@ export default function Carousel({ images, title }: Props) {
   const [hoveredLevel, setHoveredLevel] = useState<number | null>(null);
   const [mouse, setMouse] = useState<{ x: number; y: number } | null>(null);
   const [cursorVisible, setCursorVisible] = useState(false);
+  const [loaded, setLoaded] = useState<Record<number, boolean>>({});
   const containerRef = useRef<HTMLDivElement>(null);
-  const autoRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const goNextRef = useRef<(by?: number) => void>(() => {});
   const n = images.length;
   const animating = exitCount > 0;
@@ -44,18 +44,10 @@ export default function Carousel({ images, title }: Props) {
 
   goNextRef.current = goNext;
 
-  const scheduleAuto = useCallback(() => {
-    if (n <= 1) return;
-    autoRef.current = setTimeout(() => goNextRef.current(1), 3000);
-  }, [n]);
+  const scheduleAuto = useCallback(() => {}, []);
 
-  useEffect(() => {
-    scheduleAuto();
-    return () => { if (autoRef.current) clearTimeout(autoRef.current); };
-  }, [current, scheduleAuto]);
-
-  const pauseAuto = () => { if (autoRef.current) clearTimeout(autoRef.current); };
-  const resumeAuto = () => scheduleAuto();
+  const pauseAuto = () => {};
+  const resumeAuto = () => {};
 
   // During animation we render exitCount exiting cards + STACK_LEVELS incoming cards
   const renderCount = Math.min(exitCount + STACK_LEVELS, n);
@@ -121,6 +113,7 @@ export default function Carousel({ images, title }: Props) {
                 borderLeft: "1px solid var(--color-outline-variant)",
                 borderRight: "1px solid var(--color-outline-variant)",
                 cursor: "none",
+                background: loaded[imgIdx] ? "transparent" : "#fff",
               }}
             >
               <Image
@@ -128,6 +121,7 @@ export default function Carousel({ images, title }: Props) {
                 alt={`${title} — image ${imgIdx + 1}`}
                 fill
                 className="object-cover"
+                onLoad={() => setLoaded((prev) => ({ ...prev, [imgIdx]: true }))}
               />
             </div>
           );

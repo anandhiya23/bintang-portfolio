@@ -88,15 +88,11 @@ export default async function WorkDetailPage({
 
         {/* Carousel + About */}
         <section className="px-6 sm:px-10 md:px-16 lg:px-24 py-16 md:py-20" style={{ borderBottom: "1px solid var(--color-outline-variant)" }}>
-          <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-10 lg:gap-16 lg:items-start">
-
-            {/* Carousel — half width on laptop, no clipping so peek works */}
-            <div className="w-full lg:w-1/2 shrink-0">
-              <Carousel images={project.images} title={project.title} />
-            </div>
+          <div className="max-w-4xl mx-auto flex flex-col gap-12">
+            <Carousel images={project.images} title={project.title} />
 
             {/* About */}
-            <div className="flex flex-col gap-6 lg:pt-2">
+            <div className="flex flex-col gap-6">
               <div className="uppercase" style={{ fontFamily: "var(--font-jetbrains), monospace", fontSize: "10px", color: "var(--color-primary)", letterSpacing: "0.2em" }}>
                 About the Project
               </div>
@@ -104,7 +100,6 @@ export default async function WorkDetailPage({
                 {project.description}
               </p>
             </div>
-
           </div>
         </section>
 

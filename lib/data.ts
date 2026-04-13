@@ -12,9 +12,8 @@ export const siteConfig = {
 // ─── Navigation links (footer) ────────────────────────────────────────────────
 
 export const socialLinks = [
-  { label: "GitHub", href: "https://github.com/bintanganandhiya" },
-  { label: "LinkedIn", href: "#" },
-  { label: "Read.cv", href: "#" },
+  { label: "GitHub", href: "https://github.com/anandhiya23" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/bintanganandhiya/" },
 ];
 
 // ─── Values / About ───────────────────────────────────────────────────────────
@@ -44,13 +43,27 @@ export type Project = {
   date: string;
   tags: string[];
   description: string;
-  /** Image src paths. Use picsum.photos seeds for mock; replace with real paths when available. */
   images: string[];
 };
 
 export const projects: Project[] = [
   {
     index: "01",
+    slug: "murka",
+    title: "MURKA",
+    name: "Murka",
+    date: "Branding, Social Media, Event",
+    tags: ["Branding", "Social Media", "Event"],
+    description:
+      "Murka — short for Muda Cari Kaya — is a South Jakarta-based creative agency built on the hunger and hustle of youth. Specializing in event organizing and social media management services (SMMS), Murka bridges the gap between raw creative energy and polished brand execution. The identity is bold, street-smart, and unapologetically ambitious: a reflection of a generation that refuses to wait its turn. From concept to crowd, Murka turns ideas into experiences and feeds into the cultural pulse of a city that never slows down.",
+    images: [
+      "/murka/1 (1).png",
+      "/murka/2 (1).png",
+      "/murka/3 (1).png",
+    ],
+  },
+  {
+    index: "02",
     slug: "pesta-kita",
     title: "PESTA_KITA",
     name: "Pesta Kita",
@@ -65,7 +78,7 @@ export const projects: Project[] = [
     ],
   },
   {
-    index: "02",
+    index: "03",
     slug: "jakarta-youth-festival",
     title: "JAKARTA_YOUTH_FESTIVAL",
     name: "Jakarta Youth Festival",
@@ -82,8 +95,38 @@ export const projects: Project[] = [
     ],
   },
   {
-    index: "03",
-    slug: "gdsc-sampoerna",
+    index: "04",
+    slug: "jiwajiwa",
+    title: "JIWAJIWA",
+    name: "JiwaJiwa",
+    date: "Branding, Visual Identity",
+    tags: ["Branding", "Visual Identity"],
+    description:
+      "Welcome to JiwaJiwa, a home for every story and feeling. A talent management agency focused on mental health and wellbeing.",
+    images: [
+      "/jiwajiwa/KV Jiwa Jiwa 12.png",
+      "/jiwajiwa/KV Jiwa Jiwa 14 (1).png",
+      "/jiwajiwa/KV Jiwa Jiwa 13.png",
+    ],
+  },
+  {
+    index: "05",
+    slug: "yayasan-bumn",
+    title: "YAYASAN_BUMN",
+    name: "Yayasan BUMN",
+    date: "Branding, Visual Identity",
+    tags: ["Branding", "Visual Identity"],
+    description:
+      "Inspired by the \"Indonesia Raya\" anthem, this identity embodies a transformative vision for Yayasan BUMN — nurturing the nation's soul through Jiwa Raga, Pikiran, Alam, Bangsa, and Hidup. The design seeks to uplift individual spirits, minds, and lives, echoing the anthem's call to awaken the nation's essence, intellect, nature, life, and unity for a greater Indonesia.",
+    images: [
+      "/yayasan_bumn/1.png",
+      "/yayasan_bumn/2.png",
+      "/yayasan_bumn/3.png",
+    ],
+  },
+  {
+    index: "06",
+    slug: "gdsc-sampoerna-university",
     title: "GDSC_SAMPOERNA",
     name: "GDSC Sampoerna University",
     date: "Organization Leader",
@@ -91,13 +134,13 @@ export const projects: Project[] = [
     description:
       "GDSC uses Google's design guidelines as a reference while also adding our own unique patterns and fresh layouts. The brightly colored and fun composition shows the organisation's lighthearted values and playfulness.",
     images: [
-      "https://picsum.photos/seed/gdsc-1/1600/900",
-      "https://picsum.photos/seed/gdsc-2/1600/900",
-      "https://picsum.photos/seed/gdsc-3/1600/900",
+      "/gdsc/Design Porto 23.png",
+      "/gdsc/Design Porto 24.png",
+      "/gdsc/Design Porto 25.png",
     ],
   },
   {
-    index: "04",
+    index: "07",
     slug: "tedx-sampoerna-2022",
     title: "TEDX_SAMPOERNA_2022",
     name: "TEDx Sampoerna University 2022",
@@ -106,13 +149,13 @@ export const projects: Project[] = [
     description:
       "TEDxSampoernaUniversity 2022 expresses an interesting design concept that took inspiration from old media and prints. It incorporates multiple font families and vintage colors.",
     images: [
-      "https://picsum.photos/seed/tedx-1/1600/900",
-      "https://picsum.photos/seed/tedx-2/1600/900",
-      "https://picsum.photos/seed/tedx-3/1600/900",
+      "/tedx_sampoerna/Design Porto 20.png",
+      "/tedx_sampoerna/Design Porto 21.png",
+      "/tedx_sampoerna/Design Porto 22.png",
     ],
   },
   {
-    index: "05",
+    index: "08",
     slug: "a-new-dawn",
     title: "A_NEW_DAWN",
     name: "A New Dawn",
@@ -121,13 +164,11 @@ export const projects: Project[] = [
     description:
       "A New Dawn is a revolutionary movement within our campus student organisations. The design uses powerful photos and epic illustrations to convey unity and greatness.",
     images: [
-      "https://picsum.photos/seed/anewdawn-1/1600/900",
-      "https://picsum.photos/seed/anewdawn-2/1600/900",
-      "https://picsum.photos/seed/anewdawn-3/1600/900",
+      "/singles/A New Dawn.png",
     ],
   },
   {
-    index: "06",
+    index: "09",
     slug: "centennialz-black",
     title: "CENTENNIALZ_BLACK",
     name: "CentennialZ — Black Period",
@@ -142,7 +183,7 @@ export const projects: Project[] = [
     ],
   },
   {
-    index: "07",
+    index: "10",
     slug: "centennialz-blue",
     title: "CENTENNIALZ_BLUE",
     name: "CentennialZ — Blue & White Period",
@@ -151,13 +192,11 @@ export const projects: Project[] = [
     description:
       'CentennialZ\'s design transforms through the ages. The "Blue & White Period" conveys the rebirth of the organisation in 2022. The light colors resembles our strong spirit and bright future.',
     images: [
-      "https://picsum.photos/seed/czblue-1/1600/900",
-      "https://picsum.photos/seed/czblue-2/1600/900",
-      "https://picsum.photos/seed/czblue-3/1600/900",
+      "/singles/CentennialZBlue.png",
     ],
   },
   {
-    index: "08",
+    index: "11",
     slug: "bem-km-su-pandavas",
     title: "BEM_KM_SU_PANDAVAS",
     name: "BEM KM SU Pandavas",
@@ -166,13 +205,11 @@ export const projects: Project[] = [
     description:
       "BEM KM SU Pandavas cabinet emphasize a stylistic design and elegant composition. With consistent color palette and styling we establish a strong brand image.",
     images: [
-      "https://picsum.photos/seed/pandavas-1/1600/900",
-      "https://picsum.photos/seed/pandavas-2/1600/900",
-      "https://picsum.photos/seed/pandavas-3/1600/900",
+      "/singles/Pandawa Cabinet.png",
     ],
   },
   {
-    index: "09",
+    index: "12",
     slug: "ajakgerak",
     title: "AJAKGERAK",
     name: "AjakGerak",
@@ -181,9 +218,7 @@ export const projects: Project[] = [
     description:
       "After almost 2 years with AjakGerak, I have seen the design and branding evolve over time. Through iterative design we learn how to improve the content production quality and design efficiency.",
     images: [
-      "https://picsum.photos/seed/ajakgerak-1/1600/900",
-      "https://picsum.photos/seed/ajakgerak-2/1600/900",
-      "https://picsum.photos/seed/ajakgerak-3/1600/900",
+      "/singles/AjakGerak.png",
     ],
   },
 ];

@@ -87,19 +87,8 @@ export default function FeaturedWork() {
                     className="trace-hover transition-colors uppercase inline-block"
                     style={{ background: "var(--color-primary)", color: "#fff", fontFamily: "var(--font-jetbrains), monospace", fontSize: "10px", fontWeight: "bold", padding: "16px 24px", letterSpacing: "0.1em", textDecoration: "none" }}
                   >
-                    Explore Case
+                    More Details
                   </Link>
-                  <div
-                    className="p-4 px-6 cursor-pointer group transition-all inline-flex items-center gap-3"
-                    style={{ border: "1px solid var(--color-outline-variant)", background: "#fff" }}
-                    onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.borderColor = "var(--color-primary)")}
-                    onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.borderColor = "var(--color-outline-variant)")}
-                  >
-                    <span className="uppercase" style={{ fontFamily: "var(--font-jetbrains), monospace", fontSize: "10px", color: "var(--color-on-surface)", letterSpacing: "0.3em" }}>
-                      View Archive
-                    </span>
-                    <div className="h-px w-4 group-hover:w-8 transition-all duration-500" style={{ background: "var(--color-primary)" }} />
-                  </div>
                 </div>
               </div>
 
