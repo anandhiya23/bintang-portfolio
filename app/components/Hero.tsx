@@ -1,6 +1,35 @@
 "use client";
 
 import Image from "next/image";
+import { useEffect, useState } from "react";
+
+const TYPEWRITER_WORDS = ["programming.", "engineering.", "community.", "movement."];
+
+function useTypewriter(words: string[], typeMs = 90, deleteMs = 45, holdMs = 1600) {
+  const [wordIdx, setWordIdx] = useState(0);
+  const [text, setText] = useState("");
+  const [deleting, setDeleting] = useState(false);
+
+  useEffect(() => {
+    const current = words[wordIdx];
+    if (!deleting && text === current) {
+      const t = setTimeout(() => setDeleting(true), holdMs);
+      return () => clearTimeout(t);
+    }
+    if (deleting && text === "") {
+      setDeleting(false);
+      setWordIdx((i) => (i + 1) % words.length);
+      return;
+    }
+    const t = setTimeout(
+      () => setText(deleting ? current.slice(0, text.length - 1) : current.slice(0, text.length + 1)),
+      deleting ? deleteMs : typeMs,
+    );
+    return () => clearTimeout(t);
+  }, [text, deleting, wordIdx, words, typeMs, deleteMs, holdMs]);
+
+  return text;
+}
 
 const scrollTo = (id: string) => {
   const el = document.getElementById(id);
@@ -10,11 +39,28 @@ const scrollTo = (id: string) => {
 };
 
 export default function Hero() {
+  const typed = useTypewriter(TYPEWRITER_WORDS);
   return (
     <section id="home">
       {/* ── Mobile / tablet: stacked ── */}
-      <div className="lg:hidden flex flex-col">
-        <div className="px-6 sm:px-10 py-12 flex flex-col gap-8">
+      <div className="lg:hidden relative flex flex-col">
+        {/* Bridge backdrop — full width, centered */}
+        <div
+          aria-hidden
+          className="absolute inset-0 opacity-50 pointer-events-none select-none z-0"
+          style={{
+            backgroundColor: "var(--color-primary)",
+            WebkitMaskImage: "url(/bridge.svg)",
+            maskImage: "url(/bridge.svg)",
+            WebkitMaskRepeat: "no-repeat",
+            maskRepeat: "no-repeat",
+            WebkitMaskPosition: "center bottom",
+            maskPosition: "center bottom",
+            WebkitMaskSize: "100% auto",
+            maskSize: "100% auto",
+          }}
+        />
+        <div className="relative z-10 px-6 sm:px-10 py-12 flex flex-col gap-8">
           {/* Status badge */}
           <div
             className="inline-flex items-center gap-2 px-4 py-1.5 self-start"
@@ -27,12 +73,16 @@ export default function Hero() {
           </div>
 
           <h1
-            className="italic text-4xl sm:text-5xl leading-[1.05]"
-            style={{ fontFamily: "var(--font-playfair), serif", color: "var(--color-on-surface)", letterSpacing: "-0.02em" }}
+            className="italic leading-[1.05] w-full"
+            style={{ fontFamily: "var(--font-playfair), serif", color: "var(--color-on-surface)", letterSpacing: "-0.02em", fontSize: "clamp(2.25rem, 10.5vw, 4.5rem)" }}
           >
             Building bridges <br />
             between <span style={{ color: "var(--color-primary)" }}>design</span>{" "}
-            &amp; <span className="not-italic" style={{ color: "var(--color-secondary)" }}>programming.</span>
+            &amp; <br />
+            <span className="not-italic" style={{ color: "var(--color-secondary)" }}>
+              {typed}
+              <span className="inline-block w-[0.05em] -mb-[0.05em] ml-[0.05em] animate-pulse" style={{ background: "currentColor", height: "0.9em", verticalAlign: "-0.1em" }} />
+            </span>
           </h1>
 
           <div className="flex flex-col sm:flex-row gap-6 items-start sm:items-center">
@@ -55,16 +105,8 @@ export default function Hero() {
             </a>
           </div>
 
-          <div className="pt-8" style={{ borderTop: "1px solid var(--color-outline-variant)" }}>
-            <div className="mb-3 uppercase" style={{ fontFamily: "var(--font-jetbrains), monospace", fontSize: "10px", color: "var(--color-secondary)", letterSpacing: "0.3em" }}>
-              Core Philosophy
-            </div>
-            <p className="text-sm leading-relaxed max-w-sm italic" style={{ fontFamily: "var(--font-body), sans-serif", color: "var(--color-secondary)" }}>
-              &ldquo;The screen is a structured, multi-dimensional space where logic meets aesthetic restraint.&rdquo;
-            </p>
-          </div>
         </div>
-        <div className="w-full max-w-xs mx-auto leading-[0] px-8">
+        <div className="relative z-10 w-full max-w-xs mx-auto leading-[0] px-8">
           <Image
             src="/DSC06399 1.png"
             alt="Bintang Anandhiya"
@@ -78,8 +120,24 @@ export default function Hero() {
 
       {/* ── Desktop: independent containers ── */}
       <div className="hidden lg:block relative">
+        {/* Bridge backdrop — anchored bottom-left, fills 0 → 45% width, full hero height */}
+        <div
+          aria-hidden
+          className="absolute left-[-10%] bottom-0 top-0 w-[60%] opacity-50 pointer-events-none select-none z-0"
+          style={{
+            backgroundColor: "var(--color-primary)",
+            WebkitMaskImage: "url(/bridge.svg)",
+            maskImage: "url(/bridge.svg)",
+            WebkitMaskRepeat: "no-repeat",
+            maskRepeat: "no-repeat",
+            WebkitMaskPosition: "left bottom",
+            maskPosition: "left bottom",
+            WebkitMaskSize: "contain",
+            maskSize: "contain",
+          }}
+        />
         {/* Image — defines section height */}
-        <div className="w-[33%] leading-[0] ml-[5%]">
+        <div className="relative w-[33%] leading-[0] ml-[5%] z-10">
           <Image
             src="/DSC06399 1.png"
             alt="Bintang Anandhiya"
@@ -91,7 +149,7 @@ export default function Hero() {
         </div>
 
         {/* Text — absolutely overlaid on the right, independent */}
-        <div className="absolute top-0 right-0 w-[62%] h-full flex flex-col justify-end px-16 xl:px-24 pb-16">
+        <div className="absolute top-0 right-0 w-[62%] h-full flex flex-col justify-center px-16 xl:px-24 pb-32">
           {/* Status badge */}
           <div
             className="inline-flex items-center gap-2 mb-8 px-4 py-1.5 self-start"
@@ -110,11 +168,14 @@ export default function Hero() {
             Building bridges <br />
             between{" "}
             <span style={{ color: "var(--color-primary)" }}>design</span>{" "}
-            &amp;{" "}
-            <span className="not-italic" style={{ color: "var(--color-secondary)" }}>programming.</span>
+            &amp; <br />
+            <span className="not-italic" style={{ color: "var(--color-secondary)" }}>
+              {typed}
+              <span className="inline-block w-[0.05em] -mb-[0.05em] ml-[0.05em] animate-pulse" style={{ background: "currentColor", height: "0.9em", verticalAlign: "-0.1em" }} />
+            </span>
           </h1>
 
-          <div className="flex flex-row gap-8 items-center mb-16">
+          <div className="flex flex-row gap-8 items-center">
             <a
               href="#work" onClick={(e) => { e.preventDefault(); scrollTo("work"); }}
               className="inline-block transition-all duration-300 trace-hover"
@@ -124,7 +185,7 @@ export default function Hero() {
             >
               View Portfolio
             </a>
-            <a href="#about" className="flex items-center gap-4 group cursor-pointer" style={{ textDecoration: "none" }}>
+            <a href="#about" onClick={(e) => { e.preventDefault(); scrollTo("about"); }} className="flex items-center gap-4 group cursor-pointer" style={{ textDecoration: "none" }}>
               <span className="uppercase group-hover:text-[var(--color-primary)] transition-colors" style={{ fontFamily: "var(--font-jetbrains), monospace", fontSize: "11px", letterSpacing: "0.15em", color: "var(--color-secondary)" }}>
                 The Methodology
               </span>
@@ -132,15 +193,6 @@ export default function Hero() {
                 <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
               </svg>
             </a>
-          </div>
-
-          <div className="pt-8" style={{ borderTop: "1px solid var(--color-outline-variant)" }}>
-            <div className="mb-3 uppercase" style={{ fontFamily: "var(--font-jetbrains), monospace", fontSize: "10px", color: "var(--color-secondary)", letterSpacing: "0.3em" }}>
-              Core Philosophy
-            </div>
-            <p className="text-sm leading-relaxed max-w-sm italic" style={{ fontFamily: "var(--font-body), sans-serif", color: "var(--color-secondary)" }}>
-              &ldquo;The screen is a structured, multi-dimensional space where logic meets aesthetic restraint.&rdquo;
-            </p>
           </div>
         </div>
       </div>

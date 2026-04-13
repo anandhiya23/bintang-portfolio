@@ -20,18 +20,18 @@ export default function FeaturedWork() {
           <div key={project.index} className={i > 0 ? "mt-24 md:mt-32" : ""}>
             {/* Section header */}
             <div
-              className="flex flex-col sm:flex-row justify-between items-baseline mb-10 pb-8"
+              className="flex flex-col sm:flex-row justify-between items-baseline mb-0 pb-4 sm:mb-10 sm:pb-8"
               style={{ borderBottom: "1px solid var(--color-outline)" }}
             >
-              <div className="flex gap-4 items-center">
+              <div className="flex gap-4 items-end">
                 <span
-                  className="italic text-3xl md:text-4xl"
+                  className="italic text-3xl md:text-4xl leading-none"
                   style={{ fontFamily: "var(--font-playfair), serif", color: "var(--color-outline)" }}
                 >
                   {project.index}
                 </span>
                 <h2
-                  className="text-2xl md:text-3xl lg:text-4xl font-bold uppercase"
+                  className="leading-none text-base md:text-lg font-medium uppercase"
                   style={{ fontFamily: "var(--font-jetbrains), monospace", color: "var(--color-outline)", letterSpacing: "0.05em" }}
                 >
                   Featured_Work
@@ -81,11 +81,11 @@ export default function FeaturedWork() {
                   </div>
                 </div>
 
-                <div className="flex flex-col sm:flex-row gap-4">
+                <div className="flex flex-col sm:flex-row gap-4 items-start">
                   <Link
                     href={`/work/${project.slug}`}
                     className="trace-hover transition-colors uppercase inline-block"
-                    style={{ background: "var(--color-primary)", color: "#fff", fontFamily: "var(--font-jetbrains), monospace", fontSize: "10px", fontWeight: "bold", padding: "16px 24px", letterSpacing: "0.1em", textDecoration: "none" }}
+                    style={{ background: "var(--color-primary)", color: "#fff", fontFamily: "var(--font-jetbrains), monospace", fontSize: "10px", fontWeight: 500, padding: "16px 24px", letterSpacing: "0.1em", textDecoration: "none" }}
                   >
                     More Details
                   </Link>

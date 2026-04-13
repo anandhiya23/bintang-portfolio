@@ -53,17 +53,22 @@ export default function Header() {
 
   const handleNav = (label: string, href: string, e: React.MouseEvent) => {
     const hash = href.split("#")[1];
+    setActive(label);
+    setMenuOpen(false);
     if (hash && pathname === "/") {
       e.preventDefault();
       const el = document.getElementById(hash);
-      if (el) {
-        const headerH = document.querySelector("header")?.offsetHeight ?? 0;
+      if (!el) return;
+      // Measure the top bar only (not the expanded mobile menu) so scroll offset is correct.
+      const topBar = document.querySelector("header > div") as HTMLElement | null;
+      const headerH = topBar?.offsetHeight ?? 0;
+      const scroll = () => {
         const top = el.getBoundingClientRect().top + window.scrollY - headerH;
         window.scrollTo({ top: hash === "home" ? 0 : top, behavior: "smooth" });
-      }
+      };
+      // Wait for the menu collapse transition to avoid layout shift mid-scroll.
+      requestAnimationFrame(() => requestAnimationFrame(scroll));
     }
-    setActive(label);
-    setMenuOpen(false);
   };
 
   return (
@@ -156,10 +161,10 @@ export default function Header() {
         {/* Mobile menu */}
         <div
           className="md:hidden overflow-hidden transition-all duration-300"
-          style={{ maxHeight: menuOpen ? "300px" : "0" }}
+          style={{ maxHeight: menuOpen ? "360px" : "0" }}
         >
           <nav
-            className="flex flex-col px-6 pb-6 gap-6"
+            className="flex flex-col px-6 pt-6 pb-6 gap-6"
             style={{ borderTop: "1px solid var(--color-outline-variant)" }}
           >
             {navLinks.map((link) => (
@@ -167,7 +172,7 @@ export default function Header() {
                 key={link.label}
                 href={link.href}
                 onClick={(e) => handleNav(link.label, link.href, e)}
-                className={`nav-link self-start pt-4${active === link.label ? " active" : ""}`}
+                className={`nav-link self-start${active === link.label ? " active" : ""}`}
                 style={{ textDecoration: "none" }}
               >
                 {link.label}

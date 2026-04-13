@@ -3,6 +3,7 @@ import { values } from "@/lib/data";
 export default function Values() {
   return (
     <section id="about" className="px-6 sm:px-10 md:px-16 lg:px-24 py-20 md:py-32" style={{ background: "#fff" }}>
+      <div className="max-w-7xl mx-auto">
       <div className="mb-16 md:mb-20">
         <div
           className="uppercase mb-3"
@@ -47,6 +48,7 @@ export default function Values() {
             <div className="mt-6 w-0 group-hover:w-full h-px transition-all duration-700" style={{ background: "var(--color-primary)" }} />
           </div>
         ))}
+      </div>
       </div>
     </section>
   );
