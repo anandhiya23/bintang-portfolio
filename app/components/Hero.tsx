@@ -2,6 +2,13 @@
 
 import Image from "next/image";
 
+const scrollTo = (id: string) => {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const headerH = document.querySelector("header")?.offsetHeight ?? 0;
+  window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - headerH, behavior: "smooth" });
+};
+
 export default function Hero() {
   return (
     <section id="home">
@@ -30,7 +37,7 @@ export default function Hero() {
 
           <div className="flex flex-col sm:flex-row gap-6 items-start sm:items-center">
             <a
-              href="#work"
+              href="#work" onClick={(e) => { e.preventDefault(); scrollTo("work"); }}
               className="inline-block transition-all duration-300 trace-hover"
               style={{ background: "var(--color-on-surface)", color: "#fff", fontFamily: "var(--font-jetbrains), monospace", fontSize: "11px", padding: "16px 32px", textTransform: "uppercase", letterSpacing: "0.15em" }}
               onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.background = "var(--color-primary)")}
@@ -38,7 +45,7 @@ export default function Hero() {
             >
               View Portfolio
             </a>
-            <a href="#about" className="flex items-center gap-3 group cursor-pointer" style={{ textDecoration: "none" }}>
+            <a href="#about" onClick={(e) => { e.preventDefault(); scrollTo("about"); }} className="flex items-center gap-3 group cursor-pointer" style={{ textDecoration: "none" }}>
               <span className="uppercase group-hover:text-[var(--color-primary)] transition-colors" style={{ fontFamily: "var(--font-jetbrains), monospace", fontSize: "11px", letterSpacing: "0.15em", color: "var(--color-secondary)" }}>
                 The Methodology
               </span>
@@ -109,7 +116,7 @@ export default function Hero() {
 
           <div className="flex flex-row gap-8 items-center mb-16">
             <a
-              href="#work"
+              href="#work" onClick={(e) => { e.preventDefault(); scrollTo("work"); }}
               className="inline-block transition-all duration-300 trace-hover"
               style={{ background: "var(--color-on-surface)", color: "#fff", fontFamily: "var(--font-jetbrains), monospace", fontSize: "11px", padding: "20px 40px", textTransform: "uppercase", letterSpacing: "0.15em" }}
               onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.background = "var(--color-primary)")}

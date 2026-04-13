@@ -30,7 +30,38 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleNav = (label: string) => {
+  useEffect(() => {
+    if (isDetailPage) return;
+    const sections = ["home", "work", "about", "contact"];
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const label = navLinks.find((l) => l.href === `/#${entry.target.id}`)?.label;
+            if (label) setActive(label);
+          }
+        });
+      },
+      { rootMargin: "-50% 0px -50% 0px", threshold: 0 }
+    );
+    sections.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, [isDetailPage]);
+
+  const handleNav = (label: string, href: string, e: React.MouseEvent) => {
+    const hash = href.split("#")[1];
+    if (hash && pathname === "/") {
+      e.preventDefault();
+      const el = document.getElementById(hash);
+      if (el) {
+        const headerH = document.querySelector("header")?.offsetHeight ?? 0;
+        const top = el.getBoundingClientRect().top + window.scrollY - headerH;
+        window.scrollTo({ top: hash === "home" ? 0 : top, behavior: "smooth" });
+      }
+    }
     setActive(label);
     setMenuOpen(false);
   };
@@ -66,7 +97,7 @@ export default function Header() {
               <Link
                 key={link.label}
                 href={link.href}
-                onClick={() => handleNav(link.label)}
+                onClick={(e) => handleNav(link.label, link.href, e)}
                 className={`nav-link${active === link.label ? " active" : ""}`}
                 style={{ textDecoration: "none" }}
               >
@@ -130,7 +161,7 @@ export default function Header() {
               <Link
                 key={link.label}
                 href={link.href}
-                onClick={() => handleNav(link.label)}
+                onClick={(e) => handleNav(link.label, link.href, e)}
                 className={`nav-link self-start pt-4${active === link.label ? " active" : ""}`}
                 style={{ textDecoration: "none" }}
               >

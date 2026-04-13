@@ -46,7 +46,7 @@ export default function FeaturedWork() {
             </div>
 
             {/* Project card */}
-            <div className="flex flex-col lg:flex-row gap-10 lg:gap-12 lg:items-start">
+            <div className="flex flex-col lg:flex-row gap-10 lg:gap-12 lg:items-center">
 
               {/* Carousel — no overflow-hidden so peeking cards are visible */}
               <div className="w-full lg:w-1/2 shrink-0">
@@ -54,7 +54,7 @@ export default function FeaturedWork() {
               </div>
 
               {/* Details */}
-              <div className="flex flex-col justify-between gap-10 lg:py-2 lg:flex-1">
+              <div className="flex flex-col justify-center gap-10 lg:py-2 lg:flex-1">
                 <div>
                   <h3
                     className="italic mb-3 leading-snug"

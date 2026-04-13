@@ -59,12 +59,9 @@ export const projects: Project[] = [
     description:
       "Pesta Kita is a movement led by influential young leaders in Indonesia. Our core mission is to reshape the landscape of youth engagement in politics and leadership within our nation.",
     images: [
-      "https://picsum.photos/seed/pesta-kita-1/1600/900",
-      "https://picsum.photos/seed/pesta-kita-2/1600/900",
-      "https://picsum.photos/seed/pesta-kita-3/1600/900",
-      "https://picsum.photos/seed/jyf-1/1600/900",
-      "https://picsum.photos/seed/jyf-2/1600/900",
-      "https://picsum.photos/seed/jyf-3/1600/900",
+      "/pesta_kita/Slide 16_9 - 18.png",
+      "/pesta_kita/Slide 16_9 - 19.png",
+      "/pesta_kita/Slide 16_9 - 20.png",
     ],
   },
   {
@@ -139,9 +136,9 @@ export const projects: Project[] = [
     description:
       'CentennialZ\'s design transforms through the ages. The "Black Period" conveys the transition of the organisation in 2022. Through the strong typography and ornaments gives modern and serious vibes.',
     images: [
-      "https://picsum.photos/seed/czblack-1/1600/900",
-      "https://picsum.photos/seed/czblack-2/1600/900",
-      "https://picsum.photos/seed/czblack-3/1600/900",
+      "/centennialz_black/Design Porto 17.png",
+      "/centennialz_black/Design Porto 18.png",
+      "/centennialz_black/Design Porto 19.png",
     ],
   },
   {

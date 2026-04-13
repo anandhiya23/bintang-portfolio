@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import Image from "next/image";
 
 type Props = {
@@ -21,6 +21,8 @@ export default function Carousel({ images, title }: Props) {
   const [mouse, setMouse] = useState<{ x: number; y: number } | null>(null);
   const [cursorVisible, setCursorVisible] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const autoRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const goNextRef = useRef<(by?: number) => void>(() => {});
   const n = images.length;
   const animating = exitCount > 0;
 
@@ -30,7 +32,6 @@ export default function Carousel({ images, title }: Props) {
     setHoveredLevel(null);
     setExitCount(count);
     setTimeout(() => {
-      // Cards that exit and wrap around to the back of the new stack need to slide up
       const enterCount = Math.max(0, count - Math.max(0, n - STACK_LEVELS));
       setCurrent((c) => (c + count) % n);
       setExitCount(0);
@@ -40,6 +41,21 @@ export default function Carousel({ images, title }: Props) {
       }
     }, ANIM_MS);
   };
+
+  goNextRef.current = goNext;
+
+  const scheduleAuto = useCallback(() => {
+    if (n <= 1) return;
+    autoRef.current = setTimeout(() => goNextRef.current(1), 3000);
+  }, [n]);
+
+  useEffect(() => {
+    scheduleAuto();
+    return () => { if (autoRef.current) clearTimeout(autoRef.current); };
+  }, [current, scheduleAuto]);
+
+  const pauseAuto = () => { if (autoRef.current) clearTimeout(autoRef.current); };
+  const resumeAuto = () => scheduleAuto();
 
   // During animation we render exitCount exiting cards + STACK_LEVELS incoming cards
   const renderCount = Math.min(exitCount + STACK_LEVELS, n);
@@ -55,12 +71,12 @@ export default function Carousel({ images, title }: Props) {
           clipPath: `inset(-${stackExtraHeight}px 0 0 0)`,
           zIndex: 2,
         }}
-        onMouseEnter={() => setCursorVisible(true)}
+        onMouseEnter={() => { setCursorVisible(true); pauseAuto(); }}
         onMouseMove={(e) => {
           const rect = containerRef.current?.getBoundingClientRect();
           if (rect) setMouse({ x: e.clientX - rect.left, y: e.clientY - rect.top });
         }}
-        onMouseLeave={() => setCursorVisible(false)}
+        onMouseLeave={() => { setCursorVisible(false); resumeAuto(); }}
       >
         {Array.from({ length: renderCount }).map((_, level) => {
           const imgIdx = (current + level) % n;
