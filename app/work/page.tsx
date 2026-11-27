@@ -11,6 +11,8 @@ import CaseMotion from "@/app/components/case/CaseMotion";
 export const metadata: Metadata = {
   title: "Work — Bintang Anandhiya",
   description: "Brand identities, campaigns and digital design by Bintang Anandhiya.",
+  alternates: { canonical: "/work" },
+  openGraph: { title: "Work — Bintang Anandhiya", url: "/work" },
 };
 
 export default function WorkIndex() {

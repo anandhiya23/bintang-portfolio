@@ -1090,6 +1090,24 @@ html:not(.intro-lock) .lp-intro { display: none; }
 /* Case studies end on the dark next-project block; the index needs room
    before the footer. */
 .cs-index { padding-bottom: clamp(5rem, 10vw, 9rem); }
+.cs-404 { min-height: 100svh; padding-bottom: clamp(4rem, 8vw, 7rem); }
+.cs-404-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 2rem; margin-top: clamp(2rem, 4vw, 3rem); }
+.cs-404-actions .lp-btn { text-decoration: none; }
+.cs-404-actions .lp-btn:hover { background: var(--ink); color: #fff; }
+.cs-404-list { margin-top: clamp(3rem, 7vw, 6rem); border-top: 1px solid var(--color-outline); }
+.cs-404-list a {
+  display: grid;
+  grid-template-columns: 3rem 1fr auto;
+  align-items: baseline;
+  padding: 1.1rem 0;
+  border-bottom: 1px solid var(--color-outline);
+  font: 800 clamp(1.4rem, 3vw, 2.4rem)/1.1 var(--display);
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: none;
+  transition: color 0.3s, padding 0.3s;
+}
+.cs-404-list a:hover { color: var(--or); padding-left: 0.75rem; }
 .cs-hero { padding-top: calc(4.5rem + clamp(2rem, 5vw, 4rem)); padding-bottom: clamp(2.5rem, 6vw, 5rem); }
 .cs-top { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
 .cs-back {
