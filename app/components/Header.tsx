@@ -93,10 +93,10 @@ export default function Header() {
               <line x1="12" y1="19" x2="20" y2="19" />
             </svg>
             <span
-              className="text-base font-bold uppercase"
+              className="text-base font-bold"
               style={{ fontFamily: "var(--font-jetbrains), monospace", letterSpacing: "0.1em", color: "var(--color-on-surface)" }}
             >
-              BINTANG.dev
+              anandhiya.com
             </span>
           </Link>
 

@@ -21,7 +21,7 @@ export default function ContactBlock() {
       const mm = gsap.matchMedia();
       mm.add(MOTION_OK, () => {
         gsap.from(root.current!.querySelectorAll(".lp-ct-title .lp-mask > span"), {
-          yPercent: 110,
+          yPercent: 140,
           duration: 1.2,
           ease: "power4.out",
           stagger: 0.07,

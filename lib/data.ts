@@ -1,7 +1,7 @@
 // ─── Site identity ────────────────────────────────────────────────────────────
 
 export const siteConfig = {
-  name: "BINTANG.dev",
+  name: "anandhiya.com",
   tagline: "Building bridges between design & execution.",
   status: "Open to Opportunities",
   philosophy:

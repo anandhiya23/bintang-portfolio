@@ -47,12 +47,12 @@ export default function WorkRail() {
             },
           },
         });
-        gsap.utils.toArray<HTMLElement>(".lp-card-img", el).forEach((img) => {
+        gsap.utils.toArray<HTMLElement>(".lp-card-par", el).forEach((img) => {
           gsap.fromTo(
             img,
-            { xPercent: -8 },
+            { xPercent: -6 },
             {
-              xPercent: 8,
+              xPercent: 6,
               ease: "none",
               scrollTrigger: {
                 trigger: img.closest(".lp-card"),
@@ -69,7 +69,7 @@ export default function WorkRail() {
 
       mm.add(MOTION_OK, () => {
         gsap.from(el.querySelectorAll(".lp-work-title .lp-mask > span"), {
-          yPercent: 110,
+          yPercent: 140,
           duration: 1.1,
           ease: "power4.out",
           stagger: 0.08,
@@ -113,7 +113,9 @@ export default function WorkRail() {
               <li key={p.slug} className="lp-card">
                 <Link href={`/work/${p.slug}`} className="lp-card-link">
                   <span className="lp-card-media">
-                    <Image src={p.images[0]} alt="" fill sizes="(min-width: 900px) 58vw, 85vw" className="lp-card-img" />
+                    <span className="lp-card-par">
+                      <Image src={p.images[0]} alt="" fill sizes="(min-width: 900px) 64vw, 85vw" className="lp-card-img" />
+                    </span>
                     <span className="lp-card-view" aria-hidden>
                       View
                     </span>
@@ -143,7 +145,12 @@ export default function WorkRail() {
       </div>
 
       <div id="more-work" className="lp-wrap lp-more">
-        <p className="lp-label">More projects</p>
+        <div className="lp-more-head">
+          <p className="lp-label">More projects</p>
+          <Link href="/work" className="lp-more-all">
+            All case studies <span aria-hidden>→</span>
+          </Link>
+        </div>
         <ul>
           {MORE.map((p) => (
             <li key={p.slug} className="lp-more-row">

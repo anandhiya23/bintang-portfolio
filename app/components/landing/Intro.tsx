@@ -31,7 +31,7 @@ export default function Intro() {
         },
       });
       tl.from(el.querySelectorAll(".lp-intro-letter"), {
-        yPercent: 110,
+        yPercent: 130,
         duration: 0.9,
         ease: "power4.out",
         stagger: 0.05,
@@ -44,7 +44,7 @@ export default function Intro() {
             count.textContent = String(Math.round(n.v)).padStart(3, "0");
           },
         }, 0)
-        .to(el.querySelectorAll(".lp-intro-letter"), { yPercent: -110, duration: 0.6, ease: "power3.in", stagger: 0.03 }, 1.35)
+        .to(el.querySelectorAll(".lp-intro-letter"), { yPercent: -130, duration: 0.6, ease: "power3.in", stagger: 0.03 }, 1.35)
         .to(el, { yPercent: -112, duration: 1, ease: "power4.inOut" }, 1.6)
         .set(el, { display: "none" });
     },
