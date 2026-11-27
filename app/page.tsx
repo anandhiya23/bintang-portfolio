@@ -1,21 +1,32 @@
 import Header from "./components/Header";
-import Hero from "./components/Hero";
-import FeaturedWork from "./components/FeaturedWork";
-import Values from "./components/Values";
-import Contact from "./components/Contact";
-import Footer from "./components/Footer";
+import Intro from "./components/landing/Intro";
+import SmoothScroll from "./components/landing/SmoothScroll";
+import HeroZoom from "./components/landing/HeroZoom";
+import Ticker from "./components/landing/Ticker";
+import Manifesto from "./components/landing/Manifesto";
+import WorkRail from "./components/landing/WorkRail";
+import Stack from "./components/landing/Stack";
+import ContactBlock from "./components/landing/ContactBlock";
+import RevealFooter from "./components/landing/RevealFooter";
 
 export default function Home() {
   return (
-    <>
+    <div className="lp">
+      <a href="#work" className="lp-skip">
+        Skip to work
+      </a>
+      <Intro />
+      <SmoothScroll />
       <Header />
-      <main className="pt-32">
-        <Hero />
-        <FeaturedWork />
-        <Values />
-        <Contact />
+      <main className="lp-main">
+        <HeroZoom />
+        <Ticker />
+        <Manifesto />
+        <WorkRail />
+        <Stack />
+        <ContactBlock />
       </main>
-      <Footer />
-    </>
+      <RevealFooter />
+    </div>
   );
 }
