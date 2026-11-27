@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-const EMAIL = "bintangananandhiya23@gmail.com";
+const EMAIL = "bintanganandhiya23@gmail.com";
 
 const channels = [
   { label: "Email", value: EMAIL, href: `mailto:${EMAIL}` },
