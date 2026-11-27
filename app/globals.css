@@ -1062,7 +1062,7 @@ html.intro-skip .lp-intro { display: none; }
 
 /* ── Case studies & work index ───────────────────────────────────────── */
 
-.cs { background: #fff; padding-bottom: clamp(3rem, 8vw, 6rem); }
+.cs { background: #fff; }
 .cs-hero { padding-top: calc(4.5rem + clamp(2rem, 5vw, 4rem)); padding-bottom: clamp(2.5rem, 6vw, 5rem); }
 .cs-top { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
 .cs-back {
@@ -1181,7 +1181,7 @@ html.intro-skip .lp-intro { display: none; }
 .cs-next {
   position: relative;
   display: block;
-  margin-top: clamp(5rem, 12vw, 10rem);
+  margin-top: clamp(4rem, 8vw, 7rem);
   overflow: hidden;
   background: var(--ink);
   color: #fff;
@@ -1217,7 +1217,20 @@ html.intro-skip .lp-intro { display: none; }
   transition: opacity 0.5s, scale 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .cs-next:hover .cs-next-img { opacity: 1; scale: 1.04; }
-@media (max-width: 699px) { .cs-next-img { display: none; } }
+@media (max-width: 699px) {
+  .cs-next { padding-bottom: 3rem; }
+  .cs-next-in { padding-bottom: 1.75rem; }
+  .cs-next-img {
+    position: relative;
+    right: auto;
+    top: auto;
+    display: block;
+    width: auto;
+    margin: 0 var(--pad);
+    opacity: 1;
+    translate: none;
+  }
+}
 
 .cs-grid {
   display: grid;
