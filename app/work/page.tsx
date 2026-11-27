@@ -18,7 +18,7 @@ export default function WorkIndex() {
     <div className="lp">
       <SmoothScroll />
       <Header />
-      <main className="lp-main cs">
+      <main className="lp-main cs cs-index">
         <CaseMotion>
           <section className="cs-hero lp-wrap">
             <div className="cs-top">
