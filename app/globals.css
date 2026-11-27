@@ -460,8 +460,11 @@ html.intro-skip .lp-intro { display: none; }
 /* ── Manifesto ───────────────────────────────────────────────────────── */
 
 .lp-man {
+  /* Tuck up under the tilted tape so its raised edge never shows the
+     footer behind the page. */
+  margin-top: -8vw;
   background: #fff;
-  padding: clamp(7rem, 14vw, 12rem) 0 clamp(5rem, 10vw, 9rem);
+  padding: calc(clamp(7rem, 14vw, 12rem) + 8vw) 0 clamp(5rem, 10vw, 9rem);
 }
 .lp-man-text {
   font: 700 clamp(2rem, 5.6vw, 6.25rem)/1.02 var(--display);
@@ -1344,7 +1347,7 @@ html.intro-skip .lp-intro { display: none; }
 }
 
 /* ── Film grain ──────────────────────────────────────────────────────── */
-/* A per-pixel tile of light and dark specks (built once in Grain.tsx), so it
+/* Two layered per-pixel tiles of light and dark specks (built once in Grain.tsx), so it
    textures any colour without greying it. */
 :where(.lp-grain-dark, .lp-grain-light) { position: relative; overflow: clip; }
 .lp-grain-dark::after,
@@ -1354,7 +1357,9 @@ html.intro-skip .lp-intro { display: none; }
   inset: 0;
   z-index: 2;
   pointer-events: none;
-  background: var(--grain, none) 0 0 / var(--grain-size, 96px) var(--grain-size, 96px);
-  opacity: 0.12;
+  background:
+    var(--grain-a, none) 0 0 / var(--grain-a-size, 120px) var(--grain-a-size, 120px),
+    var(--grain-b, none) 37px 61px / var(--grain-b-size, 90px) var(--grain-b-size, 90px);
+  opacity: 0.09;
 }
-.lp-grain-light::after { opacity: 0.16; }
+.lp-grain-light::after { opacity: 0.12; }
