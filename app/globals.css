@@ -445,9 +445,12 @@ html.intro-skip .lp-intro { display: none; }
   letter-spacing: -0.01em;
   text-transform: uppercase;
 }
+/* Outline via a stroke painted under an ink fill: the fill hides the inner
+   half of the stroke, including the overlapping contours of the variable font. */
 .lp-tick-seq > span.is-outline {
-  color: transparent;
-  -webkit-text-stroke: 1.5px var(--or);
+  color: var(--ink);
+  -webkit-text-stroke: 3px var(--or);
+  paint-order: stroke fill;
 }
 .lp-tick-star {
   flex-shrink: 0;
@@ -567,7 +570,7 @@ html.intro-skip .lp-intro { display: none; }
   scroll-snap-align: start;
 }
 @media (min-width: 900px) {
-  .lp-card { width: min(52vw, calc((100svh - 23rem) * 1.6)); }
+  .lp-card { width: clamp(300px, min(52vw, calc((100svh - 22rem) * 1.6)), 64rem); }
 }
 .lp-card-link {
   display: block;
@@ -637,9 +640,18 @@ html.intro-skip .lp-intro { display: none; }
   text-transform: uppercase;
   color: var(--color-secondary);
 }
-@media (min-width: 900px) {
+.lp-card { container-type: inline-size; }
+@container (min-width: 560px) {
   .lp-card-meta { grid-template-columns: auto 1fr auto; }
   .lp-card-tags { grid-column: auto; text-align: right; }
+}
+/* Short landscape screens (tablets, phones on their side): tighter header. */
+@media (max-height: 700px) and (min-width: 700px) {
+  .lp-work.is-pinned .lp-work-pin { justify-content: flex-start; padding-top: 5rem; padding-bottom: 1rem; }
+  .lp-work-head .lp-label { display: none; }
+  .lp-work-title { font-size: clamp(2.5rem, 14vh, 6rem); }
+  .lp-work-rail { margin-top: 1rem; }
+  .lp-card-meta { padding-top: 0.6rem; }
 }
 .lp-card-end {
   width: clamp(240px, 28vw, 440px);
