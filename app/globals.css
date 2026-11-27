@@ -1345,31 +1345,16 @@ html.intro-skip .lp-intro { display: none; }
 
 /* ── Film grain ──────────────────────────────────────────────────────── */
 /* A per-pixel tile of light and dark specks (built once in Grain.tsx), so it
-   textures any colour without greying it. It jitters a few times a second like
-   real film; the layer only moves on the compositor, so nothing repaints. */
+   textures any colour without greying it. */
 :where(.lp-grain-dark, .lp-grain-light) { position: relative; overflow: clip; }
 .lp-grain-dark::after,
 .lp-grain-light::after {
   content: "";
   position: absolute;
-  inset: -12%;
+  inset: 0;
   z-index: 2;
   pointer-events: none;
   background: var(--grain, none) 0 0 / var(--grain-size, 96px) var(--grain-size, 96px);
   opacity: 0.12;
-  animation: lp-grain 0.9s steps(1) infinite;
 }
 .lp-grain-light::after { opacity: 0.16; }
-@keyframes lp-grain {
-  0% { transform: translate(0, 0); }
-  12% { transform: translate(-3%, 2%); }
-  25% { transform: translate(4%, -5%); }
-  37% { transform: translate(-6%, -1%); }
-  50% { transform: translate(2%, 6%); }
-  62% { transform: translate(-1%, -6%); }
-  75% { transform: translate(6%, 3%); }
-  87% { transform: translate(-4%, 5%); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .lp-grain-dark::after, .lp-grain-light::after { animation: none; }
-}
