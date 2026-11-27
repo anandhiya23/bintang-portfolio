@@ -1075,6 +1075,9 @@ html:not(.intro-lock) .lp-intro { display: none; }
 /* ── Case studies & work index ───────────────────────────────────────── */
 
 .cs { background: #fff; }
+/* Case studies end on the dark next-project block; the index needs room
+   before the footer. */
+.cs-index { padding-bottom: clamp(5rem, 10vw, 9rem); }
 .cs-hero { padding-top: calc(4.5rem + clamp(2rem, 5vw, 4rem)); padding-bottom: clamp(2.5rem, 6vw, 5rem); }
 .cs-top { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
 .cs-back {
