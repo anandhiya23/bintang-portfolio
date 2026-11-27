@@ -1249,3 +1249,85 @@ html.intro-skip .lp-intro { display: none; }
 .cs-item:hover .cs-item-name { color: var(--color-primary-dark); }
 .cs-item-year { font: 500 11px/1 var(--mono); letter-spacing: 0.1em; color: var(--color-secondary); }
 .cs-item-sum { display: block; max-width: 40rem; margin-top: 0.6rem; font: 400 0.98rem/1.55 var(--display); color: var(--color-secondary); }
+
+/* ── Process: scroll-driven 3D cube ──────────────────────────────────── */
+
+.lp-proc {
+  position: relative;
+  height: 340svh;
+  background:
+    radial-gradient(55% 45% at 70% 50%, rgba(255, 92, 0, 0.16), transparent 70%),
+    var(--ink);
+  color: #fff;
+}
+.lp-proc-sticky {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  height: 100lvh;
+  overflow: hidden;
+}
+.lp-proc-grid {
+  position: relative;
+  display: grid;
+  height: 100%;
+  padding-top: 4.5rem; /* clear the fixed header */
+  align-items: center;
+}
+.lp-proc-copy { position: relative; z-index: 1; }
+.lp-proc .lp-label { color: #94a3b8; }
+.lp-proc-title {
+  margin-top: 1rem;
+  font: 800 clamp(2.5rem, min(7vw, 12vh), 7.5rem)/0.95 var(--display);
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+.lp-proc-steps { position: relative; margin-top: clamp(1.5rem, 4vh, 3rem); min-height: 8.5rem; }
+.lp-proc-step {
+  position: absolute;
+  inset: 0 auto auto 0;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 1rem;
+  row-gap: 0.5rem;
+  max-width: 30rem;
+  opacity: 0;
+  translate: 0 1rem;
+  transition: opacity 0.5s, translate 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.lp-proc-step.is-on { opacity: 1; translate: 0 0; }
+.lp-proc-step .lp-num { color: var(--or); align-self: center; }
+.lp-proc-k { font: italic 400 clamp(1.75rem, 3vw, 2.75rem)/1 var(--serif); color: var(--or); }
+.lp-proc-t { grid-column: 2; font: 400 1rem/1.6 var(--display); color: #cbd5e1; }
+.lp-proc-bar { display: flex; gap: 0.4rem; margin-top: 1.25rem; max-width: 12rem; }
+.lp-proc-bar span { flex: 1; height: 2px; background: rgba(255, 255, 255, 0.18); transition: background 0.4s; }
+.lp-proc-bar span.is-on { background: var(--or); }
+.lp-proc-stage { position: absolute; inset: 0; }
+.lp-proc-stage canvas { display: block; width: 100% !important; height: 100% !important; }
+
+@media (min-width: 900px) {
+  .lp-proc-grid { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); }
+  .lp-proc-stage { position: relative; inset: auto; height: 100%; }
+}
+@media (max-width: 899px) {
+  .lp-proc-grid { align-items: end; padding-bottom: 2.5rem; }
+  .lp-proc-stage { bottom: 38%; top: 4.5rem; }
+  .lp-proc-title { font-size: clamp(2.5rem, 11vw, 4rem); }
+}
+
+/* Reduced motion or no WebGL: a normal-height section with all three steps. */
+.lp-proc.is-static,
+.lp-proc.is-fallback { height: auto; }
+.lp-proc.is-static .lp-proc-sticky,
+.lp-proc.is-fallback .lp-proc-sticky { position: relative; height: auto; min-height: 100svh; padding: 6rem 0; }
+.lp-proc.is-static .lp-proc-steps,
+.lp-proc.is-fallback .lp-proc-steps { display: grid; gap: 1.75rem; min-height: 0; }
+.lp-proc.is-static .lp-proc-step,
+.lp-proc.is-fallback .lp-proc-step { position: static; opacity: 1; translate: none; }
+.lp-proc.is-static .lp-proc-bar,
+.lp-proc.is-fallback .lp-proc-bar,
+.lp-proc.is-fallback .lp-proc-stage { display: none; }
+@media (max-width: 899px) {
+  .lp-proc.is-static .lp-proc-stage { position: relative; height: 60vw; inset: auto; order: -1; }
+  .lp-proc.is-static .lp-proc-grid { align-items: start; }
+}
