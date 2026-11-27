@@ -220,7 +220,7 @@ html.intro-lock { overflow: hidden; }
   animation: lp-intro-failsafe 0s 5s forwards;
 }
 @media (max-width: 767px) { .lp-intro { --cw: clamp(150px, 40vw, 340px); } }
-html.intro-skip .lp-intro { display: none; }
+html:not(.intro-lock) .lp-intro { display: none; }
 @keyframes lp-intro-failsafe { to { visibility: hidden; } }
 /* Same ground as the hero, so the hand-off is just the hero filling in. */
 .lp-intro-bg {

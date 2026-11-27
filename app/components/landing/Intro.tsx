@@ -17,7 +17,9 @@ export default function Intro() {
   useGSAP(
     () => {
       const html = document.documentElement;
-      if (html.classList.contains("intro-skip")) return;
+      // Only on a real first load: arriving here through an in-site link never
+      // ran the inline script below, so there is no intro-lock and nothing to play.
+      if (!html.classList.contains("intro-lock")) return;
       const el = root.current!;
       const card = el.querySelector<HTMLElement>(".lp-intro-card")!;
       const w = card.offsetWidth;
