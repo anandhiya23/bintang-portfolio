@@ -58,17 +58,25 @@ export default function HeroZoom() {
         gsap.set(media, { clipPath: clipFrom });
         gsap.set(portrait, { scale: scaleFrom, y: yFrom, transformOrigin: "50% 100%" });
 
-        // Entry (after the loader if it runs). The loader ends on a copy of
+        // Entry (after the opening if it runs). The opening ends on a copy of
         // the card in the same spot, so the card only animates in without it.
-        const loader = document.documentElement.classList.contains("intro-lock");
-        const intro = gsap.timeline({ paused: true });
-        intro.from(el.querySelectorAll(".lp-hero-word"), { yPercent: 140, duration: 1.2, ease: "power4.out", stagger: 0.08 });
-        // Opacity + lift only: the scroll timeline owns clipPath, and two
-        // tweens on it fight while ScrollTrigger refreshes on load.
-        if (!loader) intro.from(media, { autoAlpha: 0, y: 40, duration: 1.1, ease: "power3.out" }, 0.15);
-        intro
-          .from(el.querySelectorAll(".lp-hero-tile-in"), { scale: 0.4, opacity: 0, duration: 1.1, ease: "back.out(1.6)", stagger: 0.07 }, 0.45)
-          .from(el.querySelectorAll(".lp-hero-fade"), { opacity: 0, y: 12, duration: 0.8, stagger: 0.06 }, 0.6);
+        // The timeline is built when it plays, with explicit start values;
+        // until then CSS (html.hero-hold) keeps the words, tiles and labels in
+        // their start state. Relying on a paused timeline's initial render let
+        // Safari show them fully, then snap them away and animate them again.
+        const html = document.documentElement;
+        const loader = html.classList.contains("intro-lock");
+        const startIntro = () => {
+          const intro = gsap.timeline();
+          intro.fromTo(el.querySelectorAll(".lp-hero-word"), { yPercent: 140 }, { yPercent: 0, duration: 1.2, ease: "power4.out", stagger: 0.08 });
+          // Opacity + lift only: the scroll timeline owns clipPath, and two
+          // tweens on it fight while ScrollTrigger refreshes on load.
+          if (!loader) intro.fromTo(media, { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: 1.1, ease: "power3.out" }, 0.15);
+          intro
+            .fromTo(el.querySelectorAll(".lp-hero-tile-in"), { scale: 0.4, opacity: 0 }, { scale: 1, opacity: 1, duration: 1.1, ease: "back.out(1.6)", stagger: 0.07 }, 0.45)
+            .fromTo(el.querySelectorAll(".lp-hero-fade"), { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.8, stagger: 0.06 }, 0.6);
+          html.classList.remove("hero-hold");
+        };
 
         // Pointer parallax on the floating tiles (desktop pointers only).
         const tiles = gsap.utils.toArray<HTMLElement>(".lp-hero-tile-in", el);
@@ -87,7 +95,7 @@ export default function HeroZoom() {
           });
         };
         window.addEventListener("pointermove", onMove);
-        const play = () => intro.play();
+        const play = () => startIntro();
         if (loader) window.addEventListener("intro:done", play, { once: true });
         else play();
 

@@ -1379,3 +1379,11 @@ html:not(.intro-lock) .lp-intro { display: none; }
 html.hero-wait .lp-hero-pin { visibility: hidden; animation: lp-hero-failsafe 0s 4s forwards; }
 @keyframes lp-hero-failsafe { to { visibility: visible; } }
 html.cs-wait .cs-motion { visibility: hidden; animation: lp-hero-failsafe 0s 4s forwards; }
+/* Start state of the hero's entry while the opening plays (see HeroZoom). */
+/* visibility, not a transform: GSAP would read a CSS transform in as a
+   pixel offset and keep it after the rise. */
+html.hero-hold .lp-hero-word { visibility: hidden; animation: lp-hold-off 0s 6s forwards; }
+html.hero-hold .lp-hero-tile-in,
+html.hero-hold .lp-hero-fade { opacity: 0; animation: lp-hold-off 0s 6s forwards; }
+/* Failsafe if the opening never hands over. */
+@keyframes lp-hold-off { to { visibility: visible; opacity: 1; } }

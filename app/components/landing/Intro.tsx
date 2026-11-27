@@ -65,7 +65,7 @@ export default function Intro() {
           opening runs at all. */}
       <script
         dangerouslySetInnerHTML={{
-          __html: `try{var h=document.documentElement;h.classList.add('hero-wait');if(sessionStorage.getItem('intro-seen')||matchMedia('(prefers-reduced-motion: reduce)').matches){h.classList.add('intro-skip')}else{h.classList.add('intro-lock')}}catch(e){document.documentElement.classList.add('intro-skip')}`,
+          __html: `try{var h=document.documentElement;h.classList.add('hero-wait');if(sessionStorage.getItem('intro-seen')||matchMedia('(prefers-reduced-motion: reduce)').matches){h.classList.add('intro-skip')}else{h.classList.add('intro-lock','hero-hold')}}catch(e){document.documentElement.classList.add('intro-skip')}`,
         }}
       />
       <div ref={root} className="lp-intro" aria-hidden>
