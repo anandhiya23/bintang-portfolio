@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Inter, JetBrains_Mono } from "next/font/google";
+import { Playfair_Display, Inter, Inter_Tight, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
 const playfair = Playfair_Display({
@@ -15,6 +15,11 @@ const inter = Inter({
   weight: ["400", "500"],
 });
 
+const interTight = Inter_Tight({
+  subsets: ["latin"],
+  variable: "--font-display",
+});
+
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-jetbrains",
@@ -23,7 +28,7 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: "Bintang Anandhiya — Portfolio",
-  description: "Designer-Engineer. Building bridges between design & logic.",
+  description: "Designer-Engineer. Building bridges between design & execution.",
 };
 
 export default function RootLayout({
@@ -34,7 +39,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${playfair.variable} ${inter.variable} ${jetbrainsMono.variable} h-full antialiased`}
+      className={`${playfair.variable} ${inter.variable} ${interTight.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>

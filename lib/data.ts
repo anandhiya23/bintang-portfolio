@@ -1,8 +1,8 @@
 // ─── Site identity ────────────────────────────────────────────────────────────
 
 export const siteConfig = {
-  name: "BINTANG.dev",
-  tagline: "Building bridges between design & logic.",
+  name: "anandhiya.com",
+  tagline: "Building bridges between design & execution.",
   status: "Open to Opportunities",
   philosophy:
     "The screen is a structured, multi-dimensional space where logic meets aesthetic restraint.",

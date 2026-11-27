@@ -64,7 +64,11 @@ export default function Header() {
       const headerH = topBar?.offsetHeight ?? 0;
       const scroll = () => {
         const top = el.getBoundingClientRect().top + window.scrollY - headerH;
-        window.scrollTo({ top: hash === "home" ? 0 : top, behavior: "smooth" });
+        const target = hash === "home" ? 0 : top;
+        // Route through the smooth-scroll engine when the landing page runs one.
+        const lenis = (window as unknown as { __lenis?: { scrollTo: (y: number, o?: object) => void } }).__lenis;
+        if (lenis) lenis.scrollTo(target, { duration: 1.4 });
+        else window.scrollTo({ top: target, behavior: "smooth" });
       };
       // Wait for the menu collapse transition to avoid layout shift mid-scroll.
       requestAnimationFrame(() => requestAnimationFrame(scroll));
@@ -89,10 +93,10 @@ export default function Header() {
               <line x1="12" y1="19" x2="20" y2="19" />
             </svg>
             <span
-              className="text-base font-bold uppercase"
+              className="text-base font-bold"
               style={{ fontFamily: "var(--font-jetbrains), monospace", letterSpacing: "0.1em", color: "var(--color-on-surface)" }}
             >
-              BINTANG.dev
+              anandhiya.com
             </span>
           </Link>
 

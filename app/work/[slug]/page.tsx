@@ -1,147 +1,190 @@
+import { Fragment } from "react";
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { projects } from "@/lib/data";
+import { projectDetails } from "@/lib/projectDetails";
 import Header from "@/app/components/Header";
-import Footer from "@/app/components/Footer";
-import Carousel from "@/app/components/Carousel";
+import SmoothScroll from "@/app/components/landing/SmoothScroll";
+import RevealFooter from "@/app/components/landing/RevealFooter";
+import CaseMotion from "@/app/components/case/CaseMotion";
+
+// Only the known projects exist; anything else is a 404.
+export const dynamicParams = false;
 
 export function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }));
 }
 
-export default async function WorkDetailPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const project = projects.find((p) => p.slug === slug);
+  const p = projects.find((x) => x.slug === slug);
+  if (!p) return {};
+  return {
+    title: `${p.name} — Bintang Anandhiya`,
+    description: projectDetails[slug]?.summary ?? p.description,
+  };
+}
 
-  if (!project) notFound();
+export default async function WorkDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const i = projects.findIndex((p) => p.slug === slug);
+  if (i < 0) notFound();
+  const project = projects[i];
+  const d = projectDetails[slug];
+  const next = projects[(i + 1) % projects.length];
+  const [lead, ...rest] = project.images;
+  const words = project.name.split(" ");
 
-  const currentIndex = projects.findIndex((p) => p.slug === slug);
-  const prev = projects[currentIndex - 1] ?? null;
-  const next = projects[currentIndex + 1] ?? null;
+  const meta = [
+    { k: "Client", v: d?.client ?? project.name },
+    d?.year ? { k: "Year", v: d.year } : null,
+    d?.role ? { k: "Role", v: d.role } : null,
+    { k: "Discipline", v: project.tags.join(", ") },
+  ].filter(Boolean) as { k: string; v: string }[];
 
   return (
-    <>
+    <div className="lp">
+      <SmoothScroll />
       <Header />
-      <main className="pt-32 min-h-screen" style={{ background: "var(--color-surface)" }}>
-
-        {/* Hero */}
-        <section className="px-6 sm:px-10 md:px-16 lg:px-24 py-20 md:py-32" style={{ borderBottom: "1px solid var(--color-outline-variant)" }}>
-          <div className="max-w-7xl mx-auto">
-            <Link
-              href="/#work"
-              className="inline-flex items-center gap-3 mb-12 uppercase transition-colors hover:text-[var(--color-primary)]"
-              style={{ fontFamily: "var(--font-jetbrains), monospace", fontSize: "10px", letterSpacing: "0.2em", color: "var(--color-secondary)", textDecoration: "none" }}
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <line x1="19" y1="12" x2="5" y2="12" /><polyline points="12 19 5 12 12 5" />
-              </svg>
-              Back to Work
-            </Link>
-
-            <div className="flex flex-col sm:flex-row justify-between items-baseline gap-4 mb-10 pb-8" style={{ borderBottom: "1px solid var(--color-outline)" }}>
-              <div className="flex gap-4 items-center">
-                <span
-                  className="italic text-3xl md:text-4xl"
-                  style={{ fontFamily: "var(--font-playfair), serif", color: "var(--color-outline)" }}
-                >
-                  {project.index}
-                </span>
-                <span
-                  className="uppercase text-xs"
-                  style={{ fontFamily: "var(--font-jetbrains), monospace", color: "var(--color-primary)", letterSpacing: "0.2em" }}
-                >
-                  Case Study
-                </span>
-              </div>
-              <div
-                className="uppercase"
-                style={{ fontFamily: "var(--font-jetbrains), monospace", fontSize: "10px", color: "var(--color-primary)", letterSpacing: "0.2em" }}
-              >
-                {project.date}
-              </div>
+      <main className="lp-main cs">
+        <CaseMotion>
+          <section className="cs-hero lp-wrap">
+            <div className="cs-top">
+              <Link href="/work" className="cs-back">
+                <span aria-hidden>←</span> All work
+              </Link>
+              <span className="lp-num">
+                {project.index} / {String(projects.length).padStart(2, "0")}
+              </span>
             </div>
 
-            <h1
-              className="italic leading-[1.05] mb-10"
-              style={{ fontFamily: "var(--font-playfair), serif", color: "var(--color-on-surface)", fontSize: "clamp(2.5rem, 7vw, 6rem)", letterSpacing: "-0.02em" }}
-            >
-              {project.name}
+            <h1 className="cs-title">
+              {words.map((w, n) => (
+                <Fragment key={n}>
+                  <span className="lp-mask">
+                    <span>{w}</span>
+                  </span>{" "}
+                </Fragment>
+              ))}
             </h1>
 
-            <div className="flex flex-wrap gap-2">
-              {project.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="uppercase"
-                  style={{ border: "1px solid var(--color-outline)", color: "var(--color-secondary)", fontFamily: "var(--font-jetbrains), monospace", fontSize: "9px", padding: "6px 14px", letterSpacing: "0.1em" }}
-                >
-                  {tag}
-                </span>
+            {d?.summary && <p className="cs-summary cs-rv">{d.summary}</p>}
+
+            <dl className="cs-meta cs-rv">
+              {meta.map((m) => (
+                <div key={m.k}>
+                  <dt>{m.k}</dt>
+                  <dd>{m.v}</dd>
+                </div>
+              ))}
+            </dl>
+          </section>
+
+          <figure className="cs-lead">
+            <div className="cs-frame">
+              <div className="cs-par">
+                <Image src={lead} alt={`${project.name}, key visual`} fill preload sizes="100vw" className="object-cover" />
+              </div>
+            </div>
+          </figure>
+
+          <section className="cs-block lp-wrap">
+            <p className="lp-label">(01) Overview</p>
+            <div className="cs-prose">
+              <p className="cs-lede cs-rv">{project.description}</p>
+              {d?.context.map((t, n) => (
+                <p key={n} className="cs-rv">
+                  {t}
+                </p>
               ))}
             </div>
-          </div>
-        </section>
+          </section>
 
-        {/* Carousel + About */}
-        <section className="px-6 sm:px-10 md:px-16 lg:px-24 py-16 md:py-20" style={{ borderBottom: "1px solid var(--color-outline-variant)" }}>
-          <div className="max-w-4xl mx-auto flex flex-col gap-12">
-            <Carousel images={project.images} title={project.title} />
+          {d?.facts && (
+            <section className="cs-facts lp-wrap">
+              {d.facts.map((f) => (
+                <div key={f.label} className="cs-fact cs-rv">
+                  <span className="cs-fact-v">{f.value}</span>
+                  <span className="lp-num">{f.label}</span>
+                </div>
+              ))}
+            </section>
+          )}
 
-            {/* About */}
-            <div className="flex flex-col gap-6">
-              <div className="uppercase" style={{ fontFamily: "var(--font-jetbrains), monospace", fontSize: "10px", color: "var(--color-primary)", letterSpacing: "0.2em" }}>
-                About the Project
+          {rest[0] && <Shot src={rest[0]} alt={`${project.name}, detail 1`} />}
+
+          {d && (
+            <section className="cs-block lp-wrap">
+              <p className="lp-label">(02) Approach</p>
+              <div className="cs-prose">
+                {d.approach.map((t, n) => (
+                  <p key={n} className={`cs-rv ${n === 0 ? "cs-lede" : ""}`}>
+                    {t}
+                  </p>
+                ))}
+                <ul className="cs-deliv cs-rv" aria-label="Deliverables">
+                  {d.deliverables.map((x) => (
+                    <li key={x}>{x}</li>
+                  ))}
+                </ul>
               </div>
-              <p className="text-base leading-relaxed" style={{ color: "var(--color-secondary)" }}>
-                {project.description}
-              </p>
-            </div>
-          </div>
-        </section>
+            </section>
+          )}
 
-        {/* Prev / Next navigation */}
-        <section className="px-6 sm:px-10 md:px-16 lg:px-24 py-16 md:py-20">
-          <div className="max-w-7xl mx-auto flex justify-between items-center gap-6">
-            {prev ? (
-              <Link
-                href={`/work/${prev.slug}`}
-                className="flex items-center gap-4 group"
-                style={{ textDecoration: "none" }}
-              >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" strokeWidth="1.5" className="transition-transform group-hover:-translate-x-1">
-                  <line x1="19" y1="12" x2="5" y2="12" /><polyline points="12 19 5 12 12 5" />
-                </svg>
-                <div>
-                  <div className="uppercase mb-1" style={{ fontFamily: "var(--font-jetbrains), monospace", fontSize: "9px", color: "var(--color-outline)", letterSpacing: "0.2em" }}>Previous</div>
-                  <div className="uppercase font-bold" style={{ fontFamily: "var(--font-jetbrains), monospace", fontSize: "11px", color: "var(--color-on-surface)", letterSpacing: "0.1em" }}>{prev.title}</div>
+          {d?.palette && (
+            <section className="cs-palette lp-wrap" aria-label="Colour palette">
+              {d.palette.map((c) => (
+                <div key={c.hex} className="cs-swatch cs-rv" style={{ background: c.hex }}>
+                  <span>{c.name}</span>
+                  <span>{c.hex}</span>
                 </div>
-              </Link>
-            ) : <div />}
+              ))}
+            </section>
+          )}
 
-            {next ? (
-              <Link
-                href={`/work/${next.slug}`}
-                className="flex items-center gap-4 group text-right"
-                style={{ textDecoration: "none" }}
-              >
-                <div>
-                  <div className="uppercase mb-1" style={{ fontFamily: "var(--font-jetbrains), monospace", fontSize: "9px", color: "var(--color-outline)", letterSpacing: "0.2em" }}>Next</div>
-                  <div className="uppercase font-bold" style={{ fontFamily: "var(--font-jetbrains), monospace", fontSize: "11px", color: "var(--color-on-surface)", letterSpacing: "0.1em" }}>{next.title}</div>
-                </div>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" strokeWidth="1.5" className="transition-transform group-hover:translate-x-1">
-                  <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
-                </svg>
-              </Link>
-            ) : <div />}
-          </div>
-        </section>
+          {rest.slice(1).map((src, n) => (
+            <Shot key={src} src={src} alt={`${project.name}, detail ${n + 2}`} />
+          ))}
 
+          {d?.sources && (
+            <section className="cs-block lp-wrap">
+              <p className="lp-label">Sources</p>
+              <ul className="cs-sources">
+                {d.sources.map((s) => (
+                  <li key={s.href}>
+                    <a href={s.href} target="_blank" rel="noopener noreferrer">
+                      {s.label} <span aria-hidden>↗</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
+
+          <Link href={`/work/${next.slug}`} className="cs-next">
+            <span className="lp-wrap cs-next-in">
+              <span className="lp-num">Next project · {next.index}</span>
+              <span className="cs-next-name">{next.name}</span>
+            </span>
+            <span className="cs-next-img" aria-hidden>
+              <Image src={next.images[0]} alt="" fill sizes="50vw" className="object-cover" />
+            </span>
+          </Link>
+        </CaseMotion>
       </main>
-      <Footer />
-    </>
+      <RevealFooter />
+    </div>
+  );
+}
+
+function Shot({ src, alt }: { src: string; alt: string }) {
+  return (
+    <figure className="cs-shot lp-wrap cs-rv">
+      <div className="cs-shot-frame">
+        <Image src={src} alt={alt} width={1920} height={1080} sizes="(min-width: 1440px) 1360px, 100vw" />
+      </div>
+    </figure>
   );
 }
