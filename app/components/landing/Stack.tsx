@@ -55,7 +55,7 @@ export default function Stack() {
     <section ref={root} className="lp-stack" aria-labelledby="stack-title">
       <div className="lp-wrap">
         <div className="lp-label-row">
-          <p className="lp-label">(03) How I work</p>
+          <p className="lp-label">(04) How I work</p>
           <h2 id="stack-title" className="lp-label lp-label-r">This is my thing</h2>
         </div>
         <ol className="lp-stack-list">

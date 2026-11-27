@@ -58,15 +58,25 @@ export default function HeroZoom() {
         gsap.set(media, { clipPath: clipFrom });
         gsap.set(portrait, { scale: scaleFrom, y: yFrom, transformOrigin: "50% 100%" });
 
-        // Entry (after the loader if it runs).
-        const intro = gsap.timeline({ paused: true });
-        intro
-          .from(el.querySelectorAll(".lp-hero-word"), { yPercent: 140, duration: 1.2, ease: "power4.out", stagger: 0.08 })
+        // Entry (after the opening if it runs). The opening ends on a copy of
+        // the card in the same spot, so the card only animates in without it.
+        // The timeline is built when it plays, with explicit start values;
+        // until then CSS (html.hero-hold) keeps the words, tiles and labels in
+        // their start state. Relying on a paused timeline's initial render let
+        // Safari show them fully, then snap them away and animate them again.
+        const html = document.documentElement;
+        const loader = html.classList.contains("intro-lock");
+        const startIntro = () => {
+          const intro = gsap.timeline();
+          intro.fromTo(el.querySelectorAll(".lp-hero-word"), { yPercent: 140 }, { yPercent: 0, duration: 1.2, ease: "power4.out", stagger: 0.08 });
           // Opacity + lift only: the scroll timeline owns clipPath, and two
           // tweens on it fight while ScrollTrigger refreshes on load.
-          .from(media, { autoAlpha: 0, y: 40, duration: 1.1, ease: "power3.out" }, 0.15)
-          .from(el.querySelectorAll(".lp-hero-tile-in"), { scale: 0.4, opacity: 0, duration: 1.1, ease: "back.out(1.6)", stagger: 0.07 }, 0.45)
-          .from(el.querySelectorAll(".lp-hero-fade"), { opacity: 0, y: 12, duration: 0.8, stagger: 0.06 }, 0.6);
+          if (!loader) intro.fromTo(media, { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: 1.1, ease: "power3.out" }, 0.15);
+          intro
+            .fromTo(el.querySelectorAll(".lp-hero-tile-in"), { scale: 0.4, opacity: 0 }, { scale: 1, opacity: 1, duration: 1.1, ease: "back.out(1.6)", stagger: 0.07 }, 0.45)
+            .fromTo(el.querySelectorAll(".lp-hero-fade"), { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.8, stagger: 0.06 }, 0.6);
+          html.classList.remove("hero-hold");
+        };
 
         // Pointer parallax on the floating tiles (desktop pointers only).
         const tiles = gsap.utils.toArray<HTMLElement>(".lp-hero-tile-in", el);
@@ -85,11 +95,9 @@ export default function HeroZoom() {
           });
         };
         window.addEventListener("pointermove", onMove);
-        const play = () => intro.play();
-        if (document.documentElement.classList.contains("intro-lock")) {
-          window.addEventListener("intro:done", play, { once: true });
-          gsap.delayedCall(1.55, play); // start as the curtain lifts
-        } else play();
+        const play = () => startIntro();
+        if (loader) window.addEventListener("intro:done", play, { once: true });
+        else play();
 
         const tl = gsap.timeline({
           defaults: { ease: "none" },
@@ -106,7 +114,10 @@ export default function HeroZoom() {
           .fromTo(portrait, { scale: scaleFrom, y: yFrom }, { scale: 1, y: 0, duration: 0.55, ease: "power2.inOut" }, 0)
           .to(el.querySelector(".lp-hero-l1"), { xPercent: -45, duration: 0.55 }, 0)
           .to(el.querySelector(".lp-hero-l2"), { xPercent: 45, duration: 0.55 }, 0)
-          .to(el.querySelectorAll(".lp-hero-fade"), { opacity: 0, duration: 0.15 }, 0)
+          // The entry fade owns the labels' opacity; scrolling drives a separate
+          // --ui variable (applied as filter: opacity), so the two never fight
+          // and the labels come back when scrolling back to the top.
+          .to(pin, { "--ui": 0, duration: 0.15 }, 0)
           .to(el.querySelectorAll(".lp-hero-tile.is-l"), { xPercent: -160, yPercent: -40, rotate: -14, opacity: 0, duration: 0.4, ease: "power2.in", stagger: 0.03 }, 0)
           .to(el.querySelectorAll(".lp-hero-tile.is-r"), { xPercent: 160, yPercent: -40, rotate: 14, opacity: 0, duration: 0.4, ease: "power2.in", stagger: 0.03 }, 0)
           .to(el.querySelector(".lp-hero-shade"), { opacity: 0.9, duration: 0.25 }, 0.5)
@@ -125,6 +136,8 @@ export default function HeroZoom() {
           window.removeEventListener("intro:done", play);
         };
       });
+      // Entry tweens have now hidden what they animate in; reveal the hero.
+      document.documentElement.classList.remove("hero-wait");
     },
     { scope: root },
   );
@@ -136,7 +149,7 @@ export default function HeroZoom() {
       <h1 id="hero-title" className="sr-only">
         Bintang Anandhiya, designer-engineer: building bridges between design and execution.
       </h1>
-      <div className="lp-hero-pin">
+      <div className="lp-hero-pin lp-grain-dark">
         <p className="lp-hero-kicker lp-hero-fade" aria-hidden>
           <span>(Independent)</span> Designer-Engineer
         </p>

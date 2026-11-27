@@ -26,6 +26,25 @@ body {
   background: color-mix(in srgb, var(--color-primary) 20%, transparent);
   color: var(--color-primary);
 }
+/* On orange grounds the default (orange text) would vanish; invert to ink. */
+.lp-foot ::selection,
+.lp-stack-0 ::selection,
+.lp-tick-row ::selection,
+.lp-hero-media ::selection,
+.lp-card-view ::selection,
+.lp-btn ::selection,
+.lp-man-pill-in ::selection {
+  background: var(--ink);
+  color: #fff;
+}
+/* On ink grounds use a solid orange highlight with ink text. */
+.lp-proc ::selection,
+.lp-ct ::selection,
+.cs-next ::selection,
+.lp-tick-row + .lp-tick-row ::selection {
+  background: var(--or);
+  color: var(--ink);
+}
 
 .font-headline {
   font-family: var(--font-headline);
@@ -194,59 +213,50 @@ html.intro-lock { overflow: hidden; }
 /* ── Intro ───────────────────────────────────────────────────────────── */
 
 .lp-intro {
+  --cw: clamp(150px, 22vw, 340px);
   position: fixed;
   inset: 0;
   z-index: 70;
-  display: grid;
-  place-items: center;
-  background: var(--ink);
-  color: #f8fafc;
-  animation: lp-intro-failsafe 0s 6s forwards;
+  animation: lp-intro-failsafe 0s 5s forwards;
 }
-.lp-intro::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 100%;
-  height: 14vh;
-  background: var(--or);
-}
-html.intro-skip .lp-intro { display: none; }
+@media (max-width: 767px) { .lp-intro { --cw: clamp(150px, 40vw, 340px); } }
+html:not(.intro-lock) .lp-intro { display: none; }
 @keyframes lp-intro-failsafe { to { visibility: hidden; } }
-.lp-intro-name {
-  font: 800 clamp(4rem, 19vw, 22rem)/0.88 var(--display);
-  letter-spacing: -0.01em;
+/* Same ground as the hero, so the hand-off is just the hero filling in. */
+.lp-intro-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(60% 55% at 50% 55%, rgba(255, 92, 0, 0.09), transparent 70%),
+    #fff;
 }
-.lp-intro-mask {
-  display: inline-block;
+/* Same size and spot as the hero's opening card. */
+.lp-intro-card {
+  position: absolute;
+  left: 50%;
+  top: calc(50% + 2rem);
+  width: var(--cw);
+  aspect-ratio: 1 / 1.28;
+  translate: -50% -50%;
   overflow: hidden;
-  padding: 0.14em 0.04em 0.16em;
+  background: var(--or);
+  clip-path: inset(50% 50% 50% 50%);
 }
-.lp-intro-letter { display: inline-block; }
-.lp-intro-label {
+.lp-intro-portrait {
   position: absolute;
-  left: var(--pad);
-  bottom: 2rem;
-  font: 500 11px/1 var(--mono);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: #94a3b8;
-}
-.lp-intro-count {
-  position: absolute;
-  right: var(--pad);
-  bottom: 1.25rem;
-  font: 700 clamp(2.5rem, 7vw, 6rem)/1 var(--display);
-  letter-spacing: -0.01em;
-  color: var(--or);
-  font-variant-numeric: tabular-nums;
+  bottom: 0;
+  left: 50%;
+  width: auto;
+  height: 96%;
+  max-width: none;
+  translate: -50% 0;
 }
 
 /* ── Hero ────────────────────────────────────────────────────────────── */
 
 .lp-hero { position: relative; }
 .lp-hero-pin {
+  --ui: 1;
   --cw: clamp(170px, 22vw, 340px);
   --ch: calc(var(--cw) * 1.28);
   position: relative;
@@ -255,7 +265,6 @@ html.intro-skip .lp-intro { display: none; }
   min-height: 560px;
   overflow: hidden;
   background:
-    radial-gradient(circle at 1px 1px, rgba(15, 23, 42, 0.13) 1px, transparent 1.6px) 0 0 / 28px 28px,
     radial-gradient(60% 55% at 50% 55%, rgba(255, 92, 0, 0.09), transparent 70%),
     #fff;
 }
@@ -461,8 +470,11 @@ html.intro-skip .lp-intro { display: none; }
 /* ── Manifesto ───────────────────────────────────────────────────────── */
 
 .lp-man {
+  /* Tuck up under the tilted tape so its raised edge never shows the
+     footer behind the page. */
+  margin-top: -8vw;
   background: #fff;
-  padding: clamp(7rem, 14vw, 12rem) 0 clamp(5rem, 10vw, 9rem);
+  padding: calc(clamp(7rem, 14vw, 12rem) + 8vw) 0 clamp(5rem, 10vw, 9rem);
 }
 .lp-man-text {
   font: 700 clamp(2rem, 5.6vw, 6.25rem)/1.02 var(--display);
@@ -1062,7 +1074,7 @@ html.intro-skip .lp-intro { display: none; }
 
 /* ── Case studies & work index ───────────────────────────────────────── */
 
-.cs { background: #fff; padding-bottom: clamp(3rem, 8vw, 6rem); }
+.cs { background: #fff; }
 .cs-hero { padding-top: calc(4.5rem + clamp(2rem, 5vw, 4rem)); padding-bottom: clamp(2.5rem, 6vw, 5rem); }
 .cs-top { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
 .cs-back {
@@ -1181,7 +1193,7 @@ html.intro-skip .lp-intro { display: none; }
 .cs-next {
   position: relative;
   display: block;
-  margin-top: clamp(5rem, 12vw, 10rem);
+  margin-top: clamp(4rem, 8vw, 7rem);
   overflow: hidden;
   background: var(--ink);
   color: #fff;
@@ -1217,7 +1229,20 @@ html.intro-skip .lp-intro { display: none; }
   transition: opacity 0.5s, scale 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .cs-next:hover .cs-next-img { opacity: 1; scale: 1.04; }
-@media (max-width: 699px) { .cs-next-img { display: none; } }
+@media (max-width: 699px) {
+  .cs-next { padding-bottom: 3rem; }
+  .cs-next-in { padding-bottom: 1.75rem; }
+  .cs-next-img {
+    position: relative;
+    right: auto;
+    top: auto;
+    display: block;
+    width: auto;
+    margin: 0 var(--pad);
+    opacity: 1;
+    translate: none;
+  }
+}
 
 .cs-grid {
   display: grid;
@@ -1249,3 +1274,120 @@ html.intro-skip .lp-intro { display: none; }
 .cs-item:hover .cs-item-name { color: var(--color-primary-dark); }
 .cs-item-year { font: 500 11px/1 var(--mono); letter-spacing: 0.1em; color: var(--color-secondary); }
 .cs-item-sum { display: block; max-width: 40rem; margin-top: 0.6rem; font: 400 0.98rem/1.55 var(--display); color: var(--color-secondary); }
+
+/* ── Process: scroll-driven 3D cube ──────────────────────────────────── */
+
+.lp-proc {
+  position: relative;
+  height: 480svh;
+  background:
+    radial-gradient(55% 45% at 70% 50%, rgba(255, 92, 0, 0.16), transparent 70%),
+    var(--ink);
+  color: #fff;
+}
+.lp-proc-sticky {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  height: 100lvh;
+  overflow: hidden;
+}
+.lp-proc-grid {
+  position: relative;
+  display: grid;
+  height: 100%;
+  padding-top: 4.5rem; /* clear the fixed header */
+  align-items: center;
+}
+.lp-proc-copy { position: relative; z-index: 1; }
+.lp-proc-sticky > .lp-proc-grid { z-index: 1; }
+.lp-proc .lp-label { color: #94a3b8; }
+.lp-proc-title {
+  margin-top: 1rem;
+  font: 800 clamp(2.5rem, min(7vw, 12vh), 7.5rem)/0.95 var(--display);
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+.lp-proc-steps { position: relative; margin-top: clamp(1.5rem, 4vh, 3rem); min-height: 8.5rem; }
+.lp-proc-step {
+  position: absolute;
+  inset: 0 auto auto 0;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 1rem;
+  row-gap: 0.5rem;
+  max-width: 30rem;
+  opacity: 0;
+  translate: 0 1rem;
+  transition: opacity 0.5s, translate 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.lp-proc-step.is-on { opacity: 1; translate: 0 0; }
+.lp-proc-step .lp-num { color: var(--or); align-self: center; }
+.lp-proc-k { font: italic 400 clamp(1.75rem, 3vw, 2.75rem)/1 var(--serif); color: var(--or); }
+.lp-proc-t { grid-column: 2; font: 400 1rem/1.6 var(--display); color: #cbd5e1; }
+.lp-proc-bar { display: flex; gap: 0.4rem; margin-top: 1.25rem; max-width: 12rem; }
+.lp-proc-bar span { flex: 1; height: 2px; background: rgba(255, 255, 255, 0.18); transition: background 0.4s; }
+.lp-proc-bar span.is-on { background: var(--or); }
+.lp-proc-stage { position: absolute; inset: 0; z-index: 0; }
+.lp-proc-stage canvas { display: block; width: 100% !important; height: 100% !important; }
+
+@media (min-width: 900px) {
+  .lp-proc-grid { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); pointer-events: none; }
+  .lp-proc-copy { pointer-events: auto; }
+}
+@media (max-width: 899px) {
+  .lp-proc-grid { align-items: end; padding-bottom: 2.5rem; }
+  .lp-proc-title { font-size: clamp(2.5rem, 11vw, 4rem); }
+}
+
+/* Reduced motion or no WebGL: a normal-height section with all three steps. */
+.lp-proc.is-static,
+.lp-proc.is-fallback { height: auto; }
+.lp-proc.is-static .lp-proc-sticky,
+.lp-proc.is-fallback .lp-proc-sticky { position: relative; height: auto; min-height: 100svh; padding: 6rem 0; }
+.lp-proc.is-static .lp-proc-steps,
+.lp-proc.is-fallback .lp-proc-steps { display: grid; gap: 1.75rem; min-height: 0; }
+.lp-proc.is-static .lp-proc-step,
+.lp-proc.is-fallback .lp-proc-step { position: static; opacity: 1; translate: none; }
+.lp-proc.is-static .lp-proc-bar,
+.lp-proc.is-fallback .lp-proc-bar,
+.lp-proc.is-fallback .lp-proc-stage { display: none; }
+@media (max-width: 899px) {
+  .lp-proc.is-static .lp-proc-sticky { padding-top: 70vw; }
+}
+
+/* ── Film grain ──────────────────────────────────────────────────────── */
+/* Two layered per-pixel tiles of light and dark specks (built once in Grain.tsx), so it
+   textures any colour without greying it. */
+:where(.lp-grain-dark, .lp-grain-light) { position: relative; overflow: clip; }
+.lp-grain-dark::after,
+.lp-grain-light::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    var(--grain-a, none) 0 0 / var(--grain-a-size, 120px) var(--grain-a-size, 120px),
+    var(--grain-b, none) 37px 61px / var(--grain-b-size, 90px) var(--grain-b-size, 90px);
+  opacity: 0.09;
+}
+.lp-grain-light::after { opacity: 0.12; }
+.lp-hero-fade { filter: opacity(var(--ui, 1)); }
+/* Held hidden from first paint until HeroZoom has set up its entry, with a
+   failsafe in case scripts never run. */
+/* Hide the contents, not the pin: the pin's own white ground must stay, or
+   the fixed orange footer behind the page shows through. */
+html.hero-wait .lp-hero-pin > * { visibility: hidden; animation: lp-hero-failsafe 0s 4s forwards; }
+/* The tape peeks into the first screen until the pin adds its spacer. */
+html.hero-wait .lp-tick { visibility: hidden; animation: lp-hero-failsafe 0s 4s forwards; }
+@keyframes lp-hero-failsafe { to { visibility: visible; } }
+html.cs-wait .cs-motion { visibility: hidden; animation: lp-hero-failsafe 0s 4s forwards; }
+/* Start state of the hero's entry while the opening plays (see HeroZoom). */
+/* visibility, not a transform: GSAP would read a CSS transform in as a
+   pixel offset and keep it after the rise. */
+html.hero-hold .lp-hero-word { visibility: hidden; animation: lp-hold-off 0s 6s forwards; }
+html.hero-hold .lp-hero-tile-in,
+html.hero-hold .lp-hero-fade { opacity: 0; animation: lp-hold-off 0s 6s forwards; }
+/* Failsafe if the opening never hands over. */
+@keyframes lp-hold-off { to { visibility: visible; opacity: 1; } }

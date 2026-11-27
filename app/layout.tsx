@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Inter, Inter_Tight, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import Grain from "./components/Grain";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
   variable: "--font-playfair",
-  weight: ["400", "700"],
-  style: ["normal", "italic"],
+  weight: "400",
+  style: "italic",
 });
 
 const inter = Inter({
@@ -41,7 +42,10 @@ export default function RootLayout({
       lang="en"
       className={`${playfair.variable} ${inter.variable} ${interTight.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        {children}
+        <Grain />
+      </body>
     </html>
   );
 }

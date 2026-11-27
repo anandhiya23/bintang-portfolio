@@ -6,6 +6,7 @@ import Ticker from "./components/landing/Ticker";
 import Manifesto from "./components/landing/Manifesto";
 import WorkRail from "./components/landing/WorkRail";
 import Stack from "./components/landing/Stack";
+import ProcessCube from "./components/landing/ProcessCube";
 import ContactBlock from "./components/landing/ContactBlock";
 import RevealFooter from "./components/landing/RevealFooter";
 
@@ -23,6 +24,7 @@ export default function Home() {
         <Ticker />
         <Manifesto />
         <WorkRail />
+        <ProcessCube />
         <Stack />
         <ContactBlock />
       </main>
