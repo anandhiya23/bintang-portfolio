@@ -251,6 +251,7 @@ html.intro-skip .lp-intro { display: none; }
   --ch: calc(var(--cw) * 1.28);
   position: relative;
   height: 100svh;
+  height: 100lvh; /* full height even after the mobile URL bar hides, so nothing shows beneath */
   min-height: 560px;
   overflow: hidden;
   background:
@@ -372,7 +373,8 @@ html.intro-skip .lp-intro { display: none; }
 .lp-hero-foot {
   left: var(--pad);
   right: var(--pad);
-  bottom: 1.5rem;
+  /* Stay above the mobile URL bar while it is showing (pin is 100lvh). */
+  bottom: calc(1.5rem + 100lvh - 100svh);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -519,6 +521,7 @@ html.intro-skip .lp-intro { display: none; }
 }
 .lp-work.is-pinned .lp-work-pin {
   height: 100svh;
+  height: 100lvh;
   padding: 5.5rem 0 2rem;
   overflow: hidden;
 }
