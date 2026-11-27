@@ -1275,6 +1275,7 @@ html.intro-skip .lp-intro { display: none; }
   align-items: center;
 }
 .lp-proc-copy { position: relative; z-index: 1; }
+.lp-proc-sticky > .lp-proc-grid { z-index: 1; }
 .lp-proc .lp-label { color: #94a3b8; }
 .lp-proc-title {
   margin-top: 1rem;
@@ -1302,16 +1303,15 @@ html.intro-skip .lp-intro { display: none; }
 .lp-proc-bar { display: flex; gap: 0.4rem; margin-top: 1.25rem; max-width: 12rem; }
 .lp-proc-bar span { flex: 1; height: 2px; background: rgba(255, 255, 255, 0.18); transition: background 0.4s; }
 .lp-proc-bar span.is-on { background: var(--or); }
-.lp-proc-stage { position: absolute; inset: 0; }
+.lp-proc-stage { position: absolute; inset: 0; z-index: 0; }
 .lp-proc-stage canvas { display: block; width: 100% !important; height: 100% !important; }
 
 @media (min-width: 900px) {
-  .lp-proc-grid { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); }
-  .lp-proc-stage { position: relative; inset: auto; height: 100%; }
+  .lp-proc-grid { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); pointer-events: none; }
+  .lp-proc-copy { pointer-events: auto; }
 }
 @media (max-width: 899px) {
   .lp-proc-grid { align-items: end; padding-bottom: 2.5rem; }
-  .lp-proc-stage { bottom: 38%; top: 4.5rem; }
   .lp-proc-title { font-size: clamp(2.5rem, 11vw, 4rem); }
 }
 
@@ -1328,6 +1328,34 @@ html.intro-skip .lp-intro { display: none; }
 .lp-proc.is-fallback .lp-proc-bar,
 .lp-proc.is-fallback .lp-proc-stage { display: none; }
 @media (max-width: 899px) {
-  .lp-proc.is-static .lp-proc-stage { position: relative; height: 60vw; inset: auto; order: -1; }
-  .lp-proc.is-static .lp-proc-grid { align-items: start; }
+  .lp-proc.is-static .lp-proc-sticky { padding-top: 70vw; }
+}
+
+/* ── Glossy orange, matching the 3D cubes ────────────────────────────── */
+
+.lp {
+  --gloss:
+    radial-gradient(120% 70% at 28% 0%, rgba(255, 255, 255, 0.42), rgba(255, 255, 255, 0) 58%),
+    linear-gradient(170deg, #ff8a45 0%, #ff5c00 42%, #c94200 100%);
+  --gloss-edge: inset 0 1px 0 rgba(255, 255, 255, 0.55), inset 0 -10px 24px rgba(110, 28, 0, 0.35);
+}
+.lp-hero-media,
+.lp-stack-0,
+.lp-man-pill-in,
+.lp-card-view,
+.lp-btn:not(:hover) {
+  background: var(--gloss);
+}
+.lp-stack-0,
+.lp-card-view,
+.lp-btn:not(:hover) {
+  box-shadow: var(--gloss-edge), 0 18px 40px -22px rgba(201, 66, 0, 0.9);
+}
+.lp-dot { background: radial-gradient(circle at 35% 30%, #ffd2b3, #ff5c00 55%, #b02f00); }
+/* The hero media spans the screen but starts as a small centred card, so its
+   highlight is placed where the card sits. */
+.lp-hero-media {
+  background:
+    radial-gradient(22% 18% at 42% 34%, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0) 100%),
+    linear-gradient(180deg, #ff8a45 0%, #ff6a16 32%, #ff5c00 50%, #c94200 80%, #b02f00 100%);
 }

@@ -93,7 +93,7 @@ export default function Header() {
               <line x1="12" y1="19" x2="20" y2="19" />
             </svg>
             <span
-              className="text-base font-bold"
+              className="text-base font-bold uppercase"
               style={{ fontFamily: "var(--font-jetbrains), monospace", letterSpacing: "0.1em", color: "var(--color-on-surface)" }}
             >
               anandhiya.com

@@ -126,9 +126,15 @@ export default function ProcessCube() {
         const h = wrap.clientHeight;
         renderer.setSize(w, h, false);
         camera.aspect = w / h;
-        // Keep the exploded cube (~8.5 units) in frame on narrow stages too.
-        const fit = 8.6 / (2 * Math.tan((camera.fov * Math.PI) / 360)) / Math.min(1, camera.aspect);
+        const wide = w >= 900;
+        // The stage spans the whole screen; on wide screens the cube is drawn
+        // in the right-hand part (beside the copy) by shifting the view.
+        const room = wide ? Math.min(w * 0.58, h * 1.1) / h : w / h;
+        const fit = 9.4 / (2 * Math.tan((camera.fov * Math.PI) / 360)) / Math.min(1, room);
         camera.position.set(0, 0, fit);
+        // Narrow screens: cube sits in the upper part, above the copy.
+        if (wide) camera.setViewOffset(w, h, -w * 0.2, 0, w, h);
+        else camera.setViewOffset(w, h, 0, h * 0.16, w, h);
         camera.updateProjectionMatrix();
       };
       size();
@@ -159,7 +165,7 @@ export default function ProcessCube() {
 
         for (const c of cubies) {
           // Exploded position and tumble.
-          tmp.copy(c.base).multiplyScalar(1 + 0.9 * burst).addScaledVector(c.dir, 1.1 * burst);
+          tmp.copy(c.base).multiplyScalar(1 + 0.75 * burst).addScaledVector(c.dir, 0.9 * burst);
           qLocal.setFromEuler(new THREE.Euler(c.spin.x * burst, c.spin.y * burst, c.spin.z * burst));
           // Layer twists while reassembling: top layer about Y, then the right layer about X.
           qTwist.identity();
@@ -275,8 +281,8 @@ export default function ProcessCube() {
               ))}
             </div>
           </div>
-          <div ref={stage} className="lp-proc-stage" aria-hidden />
         </div>
+        <div ref={stage} className="lp-proc-stage" aria-hidden />
       </div>
     </section>
   );
