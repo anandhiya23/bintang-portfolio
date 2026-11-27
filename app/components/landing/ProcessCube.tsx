@@ -145,6 +145,8 @@ export default function ProcessCube() {
       const qLocal = new THREE.Quaternion();
       const qTwist = new THREE.Quaternion();
       const qx = new THREE.Quaternion();
+      const eul = new THREE.Euler();
+      const grid = new THREE.Vector3();
       const AX = new THREE.Vector3(1, 0, 0);
       const AY = new THREE.Vector3(0, 1, 0);
       let lastStep = -1;
@@ -166,12 +168,12 @@ export default function ProcessCube() {
         for (const c of cubies) {
           // Exploded position and tumble.
           tmp.copy(c.base).multiplyScalar(1 + 0.75 * burst).addScaledVector(c.dir, 0.9 * burst);
-          qLocal.setFromEuler(new THREE.Euler(c.spin.x * burst, c.spin.y * burst, c.spin.z * burst));
+          qLocal.setFromEuler(eul.set(c.spin.x * burst, c.spin.y * burst, c.spin.z * burst));
           // Layer twists while reassembling: top layer about Y, then the right layer about X.
           qTwist.identity();
           if (c.base.y === 1) qTwist.setFromAxisAngle(AY, twistY);
-          const gx = c.base.clone().applyQuaternion(qTwist);
-          if (Math.round(gx.x) === 1) {
+          grid.copy(c.base).applyQuaternion(qTwist);
+          if (Math.round(grid.x) === 1) {
             qx.setFromAxisAngle(AX, twistX);
             qTwist.premultiply(qx);
           }
