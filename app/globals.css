@@ -237,6 +237,7 @@ html.intro-skip .lp-intro { display: none; }
 
 .lp-hero { position: relative; }
 .lp-hero-pin {
+  --ui: 1;
   --cw: clamp(170px, 22vw, 340px);
   --ch: calc(var(--cw) * 1.28);
   position: relative;
@@ -1353,3 +1354,9 @@ html.intro-skip .lp-intro { display: none; }
   opacity: 0.09;
 }
 .lp-grain-light::after { opacity: 0.12; }
+.lp-hero-fade { filter: opacity(var(--ui, 1)); }
+/* Held hidden from first paint until HeroZoom has set up its entry, with a
+   failsafe in case scripts never run. */
+html.hero-wait .lp-hero-pin { visibility: hidden; animation: lp-hero-failsafe 0s 4s forwards; }
+@keyframes lp-hero-failsafe { to { visibility: visible; } }
+html.cs-wait .cs-motion { visibility: hidden; animation: lp-hero-failsafe 0s 4s forwards; }

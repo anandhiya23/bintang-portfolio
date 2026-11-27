@@ -58,10 +58,12 @@ export default function Intro() {
 
   return (
     <>
-      {/* Decide before first paint whether the opening runs at all. */}
+      {/* Before first paint: hold the hero until its entry animation is set up
+          (so it never shows, vanishes and reappears), and decide whether the
+          opening runs at all. */}
       <script
         dangerouslySetInnerHTML={{
-          __html: `try{var h=document.documentElement;if(sessionStorage.getItem('intro-seen')||matchMedia('(prefers-reduced-motion: reduce)').matches){h.classList.add('intro-skip')}else{h.classList.add('intro-lock')}}catch(e){document.documentElement.classList.add('intro-skip')}`,
+          __html: `try{var h=document.documentElement;h.classList.add('hero-wait');if(sessionStorage.getItem('intro-seen')||matchMedia('(prefers-reduced-motion: reduce)').matches){h.classList.add('intro-skip')}else{h.classList.add('intro-lock')}}catch(e){document.documentElement.classList.add('intro-skip')}`,
         }}
       />
       <div ref={root} className="lp-intro" aria-hidden>

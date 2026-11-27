@@ -106,9 +106,10 @@ export default function HeroZoom() {
           .fromTo(portrait, { scale: scaleFrom, y: yFrom }, { scale: 1, y: 0, duration: 0.55, ease: "power2.inOut" }, 0)
           .to(el.querySelector(".lp-hero-l1"), { xPercent: -45, duration: 0.55 }, 0)
           .to(el.querySelector(".lp-hero-l2"), { xPercent: 45, duration: 0.55 }, 0)
-          // fromTo without an initial render: the entry fade owns opacity until the
-          // first scroll, and scrolling back to the top restores full opacity.
-          .fromTo(el.querySelectorAll(".lp-hero-fade"), { opacity: 1 }, { opacity: 0, duration: 0.15, immediateRender: false }, 0)
+          // The entry fade owns the labels' opacity; scrolling drives a separate
+          // --ui variable (applied as filter: opacity), so the two never fight
+          // and the labels come back when scrolling back to the top.
+          .to(pin, { "--ui": 0, duration: 0.15 }, 0)
           .to(el.querySelectorAll(".lp-hero-tile.is-l"), { xPercent: -160, yPercent: -40, rotate: -14, opacity: 0, duration: 0.4, ease: "power2.in", stagger: 0.03 }, 0)
           .to(el.querySelectorAll(".lp-hero-tile.is-r"), { xPercent: 160, yPercent: -40, rotate: 14, opacity: 0, duration: 0.4, ease: "power2.in", stagger: 0.03 }, 0)
           .to(el.querySelector(".lp-hero-shade"), { opacity: 0.9, duration: 0.25 }, 0.5)
@@ -127,6 +128,8 @@ export default function HeroZoom() {
           window.removeEventListener("intro:done", play);
         };
       });
+      // Entry tweens have now hidden what they animate in; reveal the hero.
+      document.documentElement.classList.remove("hero-wait");
     },
     { scope: root },
   );

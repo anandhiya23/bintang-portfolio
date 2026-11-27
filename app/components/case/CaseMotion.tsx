@@ -40,9 +40,18 @@ export default function CaseMotion({ children }: { children: React.ReactNode }) 
           );
         });
       });
+      // Reveal tweens have now hidden what they animate in; show the page.
+      document.documentElement.classList.remove("cs-wait");
     },
     { scope: root },
   );
 
-  return <div ref={root}>{children}</div>;
+  return (
+    <div ref={root} className="cs-motion">
+      {/* Hold the page from first paint until its reveals are set up, so
+          nothing shows, vanishes and reappears. */}
+      <script dangerouslySetInnerHTML={{ __html: `document.documentElement.classList.add('cs-wait')` }} />
+      {children}
+    </div>
+  );
 }
