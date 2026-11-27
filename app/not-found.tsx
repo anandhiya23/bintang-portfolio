@@ -32,7 +32,7 @@ export default function NotFound() {
               </span>
             </h1>
             <p className="cs-summary cs-rv">
-              This page doesn’t exist, or it moved. The work is all still here, though.
+              This page doesn’t exist or has moved. Try one of these projects instead.
             </p>
             <div className="cs-404-actions cs-rv">
               <Link href="/work" className="lp-btn">
