@@ -10,6 +10,9 @@ import SmoothScroll from "@/app/components/landing/SmoothScroll";
 import RevealFooter from "@/app/components/landing/RevealFooter";
 import CaseMotion from "@/app/components/case/CaseMotion";
 
+// Only the known projects exist; anything else is a 404.
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }));
 }
