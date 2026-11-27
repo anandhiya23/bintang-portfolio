@@ -163,7 +163,7 @@ export default async function WorkDetailPage({ params }: { params: Promise<{ slu
             </section>
           )}
 
-          <Link href={`/work/${next.slug}`} className="cs-next">
+          <Link href={`/work/${next.slug}`} className="cs-next lp-grain-light">
             <span className="lp-wrap cs-next-in">
               <span className="lp-num">Next project · {next.index}</span>
               <span className="cs-next-name">{next.name}</span>

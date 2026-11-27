@@ -46,7 +46,7 @@ export default function ContactBlock() {
   };
 
   return (
-    <section id="contact" ref={root} className="lp-ct" aria-labelledby="contact-title">
+    <section id="contact" ref={root} className="lp-ct lp-grain-light" aria-labelledby="contact-title">
       <div className="lp-wrap">
         <p className="lp-label">(05) Contact</p>
         <h2 id="contact-title" className="lp-ct-title">

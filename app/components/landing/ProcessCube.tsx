@@ -47,7 +47,9 @@ export default function ProcessCube() {
         setMode("fallback");
         return;
       }
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75));
+      // Touch devices and small screens get a lighter canvas; the cube still reads crisply.
+      const light = window.matchMedia("(pointer: coarse)").matches || window.innerWidth < 1100;
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, light ? 1.25 : 1.6));
       renderer.outputColorSpace = THREE.SRGBColorSpace;
       renderer.toneMapping = THREE.ACESFilmicToneMapping;
       renderer.toneMappingExposure = 1.05;
@@ -260,7 +262,7 @@ export default function ProcessCube() {
 
   return (
     <section ref={root} className={`lp-proc is-${mode}`} aria-labelledby="proc-title">
-      <div className="lp-proc-sticky">
+      <div className="lp-proc-sticky lp-grain-light">
         <div className="lp-wrap lp-proc-grid">
           <div className="lp-proc-copy">
             <p className="lp-label">(03) Process</p>

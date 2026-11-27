@@ -136,7 +136,7 @@ export default function HeroZoom() {
       <h1 id="hero-title" className="sr-only">
         Bintang Anandhiya, designer-engineer: building bridges between design and execution.
       </h1>
-      <div className="lp-hero-pin">
+      <div className="lp-hero-pin lp-grain-dark">
         <p className="lp-hero-kicker lp-hero-fade" aria-hidden>
           <span>(Independent)</span> Designer-Engineer
         </p>

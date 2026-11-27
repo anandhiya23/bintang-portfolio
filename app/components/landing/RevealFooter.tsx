@@ -28,7 +28,7 @@ export default function RevealFooter() {
   };
 
   return (
-    <footer ref={ref} className="lp-foot">
+    <footer ref={ref} className="lp-foot lp-grain-dark">
       <div className="lp-wrap lp-foot-top">
         <p className="lp-foot-line">
           Okay, that’s enough scrolling.
