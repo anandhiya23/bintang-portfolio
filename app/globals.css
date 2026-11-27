@@ -216,7 +216,7 @@ html.intro-skip .lp-intro { display: none; }
 @keyframes lp-intro-failsafe { to { visibility: hidden; } }
 .lp-intro-name {
   font: 800 clamp(4rem, 19vw, 22rem)/0.88 var(--display);
-  letter-spacing: -0.03em;
+  letter-spacing: -0.01em;
 }
 .lp-intro-mask {
   display: inline-block;
@@ -238,7 +238,7 @@ html.intro-skip .lp-intro { display: none; }
   right: var(--pad);
   bottom: 1.25rem;
   font: 700 clamp(2.5rem, 7vw, 6rem)/1 var(--display);
-  letter-spacing: -0.022em;
+  letter-spacing: -0.01em;
   color: var(--or);
   font-variant-numeric: tabular-nums;
 }
@@ -268,7 +268,7 @@ html.intro-skip .lp-intro { display: none; }
   text-align: center;
   white-space: nowrap;
   font: 800 clamp(3.5rem, min(17.5vw, calc((100svh - var(--ch) - 12rem) / 1.7)), 20rem)/0.88 var(--display);
-  letter-spacing: -0.03em;
+  letter-spacing: -0.01em;
   text-transform: uppercase;
   color: var(--ink);
 }
@@ -310,7 +310,7 @@ html.intro-skip .lp-intro { display: none; }
   text-align: center;
   color: #fff;
   font: 800 clamp(3rem, 11vw, 12rem)/0.95 var(--display);
-  letter-spacing: -0.028em;
+  letter-spacing: -0.01em;
   text-transform: uppercase;
 }
 .lp-hero-say { display: inline-block; }
@@ -416,7 +416,7 @@ html.intro-skip .lp-intro { display: none; }
   padding-right: 0.45em;
   white-space: nowrap;
   font: 800 clamp(1.75rem, 5vw, 4.75rem)/1 var(--display);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
   text-transform: uppercase;
 }
 .lp-tick-seq > span.is-outline {
@@ -437,7 +437,7 @@ html.intro-skip .lp-intro { display: none; }
 }
 .lp-man-text {
   font: 700 clamp(2rem, 5.6vw, 6.25rem)/1.02 var(--display);
-  letter-spacing: -0.025em;
+  letter-spacing: -0.01em;
   text-transform: uppercase;
   color: var(--ink);
 }
@@ -508,7 +508,7 @@ html.intro-skip .lp-intro { display: none; }
 .lp-work-head .lp-label { grid-column: 1 / -1; }
 .lp-work-title {
   font: 800 clamp(3.25rem, min(11vw, 15vh), 11rem)/0.9 var(--display);
-  letter-spacing: -0.03em;
+  letter-spacing: -0.01em;
   text-transform: uppercase;
   color: var(--ink);
 }
@@ -626,7 +626,7 @@ html.intro-skip .lp-intro { display: none; }
   color: var(--ink);
   text-decoration: none;
   font: 800 clamp(1.75rem, 3vw, 3rem)/0.95 var(--display);
-  letter-spacing: -0.025em;
+  letter-spacing: -0.01em;
   text-transform: uppercase;
   transition: background 0.4s, border-color 0.4s;
 }
@@ -674,7 +674,7 @@ html.intro-skip .lp-intro { display: none; }
 }
 .lp-more-name {
   font: 600 clamp(1.4rem, 3.4vw, 3.25rem)/1 var(--display);
-  letter-spacing: -0.022em;
+  letter-spacing: -0.01em;
   text-transform: uppercase;
   transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s;
 }
@@ -742,7 +742,7 @@ html.intro-skip .lp-intro { display: none; }
 .lp-stack-title {
   max-width: 11ch;
   font: 800 clamp(2.75rem, 8.5vw, 9rem)/0.92 var(--display);
-  letter-spacing: -0.03em;
+  letter-spacing: -0.01em;
   text-transform: uppercase;
 }
 .lp-stack-bottom {
@@ -782,7 +782,7 @@ html.intro-skip .lp-intro { display: none; }
 .lp-ct-title {
   margin-top: 1.5rem;
   font: 800 clamp(3.25rem, 11.5vw, 13rem)/0.92 var(--display);
-  letter-spacing: -0.03em;
+  letter-spacing: -0.01em;
   text-transform: uppercase;
 }
 .lp-ct-grid {
@@ -803,7 +803,7 @@ html.intro-skip .lp-intro { display: none; }
   color: #fff;
   text-decoration: none;
   font: 600 clamp(1.1rem, 2.3vw, 2rem)/1.15 var(--display);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
   overflow-wrap: anywhere;
   transition: color 0.3s;
 }
@@ -912,6 +912,8 @@ html.intro-skip .lp-intro { display: none; }
   overflow: hidden;
   padding-top: clamp(4rem, 8vw, 6rem);
   background: var(--or);
+  /* Paint orange up behind the contact block's rounded bottom corners. */
+  box-shadow: 0 -64px 0 var(--or);
   color: var(--ink);
 }
 .lp-foot-top {
@@ -923,7 +925,7 @@ html.intro-skip .lp-intro { display: none; }
 }
 .lp-foot-line {
   font: 700 clamp(1.4rem, 2.8vw, 2.5rem)/1.05 var(--display);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
   text-transform: uppercase;
 }
 .lp-foot-line em {
@@ -952,7 +954,7 @@ html.intro-skip .lp-intro { display: none; }
   text-align: center;
   white-space: nowrap;
   font: 800 21.5vw/0.86 var(--display);
-  letter-spacing: -0.03em;
+  letter-spacing: -0.01em;
   text-transform: uppercase;
 }
 .lp-foot-bottom {

@@ -52,11 +52,9 @@ export default function HeroZoom() {
         const intro = gsap.timeline({ paused: true });
         intro
           .from(el.querySelectorAll(".lp-hero-word"), { yPercent: 110, duration: 1.2, ease: "power4.out", stagger: 0.08 })
-          .from(media, { clipPath: () => {
-            const c = card();
-            const my = c.t + c.h / 2;
-            return `inset(${my}px ${c.W / 2}px ${c.H - my}px ${c.W / 2}px round 22px)`;
-          }, duration: 1.2, ease: "power4.inOut" }, 0.15)
+          // Opacity + lift only: the scroll timeline owns clipPath, and two
+          // tweens on it fight while ScrollTrigger refreshes on load.
+          .from(media, { autoAlpha: 0, y: 40, duration: 1.1, ease: "power3.out" }, 0.15)
           .from(el.querySelectorAll(".lp-hero-fade"), { opacity: 0, y: 12, duration: 0.8, stagger: 0.06 }, 0.6);
         const play = () => intro.play();
         if (document.documentElement.classList.contains("intro-lock")) {
