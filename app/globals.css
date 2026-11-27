@@ -1376,7 +1376,11 @@ html:not(.intro-lock) .lp-intro { display: none; }
 .lp-hero-fade { filter: opacity(var(--ui, 1)); }
 /* Held hidden from first paint until HeroZoom has set up its entry, with a
    failsafe in case scripts never run. */
-html.hero-wait .lp-hero-pin { visibility: hidden; animation: lp-hero-failsafe 0s 4s forwards; }
+/* Hide the contents, not the pin: the pin's own white ground must stay, or
+   the fixed orange footer behind the page shows through. */
+html.hero-wait .lp-hero-pin > * { visibility: hidden; animation: lp-hero-failsafe 0s 4s forwards; }
+/* The tape peeks into the first screen until the pin adds its spacer. */
+html.hero-wait .lp-tick { visibility: hidden; animation: lp-hero-failsafe 0s 4s forwards; }
 @keyframes lp-hero-failsafe { to { visibility: visible; } }
 html.cs-wait .cs-motion { visibility: hidden; animation: lp-hero-failsafe 0s 4s forwards; }
 /* Start state of the hero's entry while the opening plays (see HeroZoom). */
