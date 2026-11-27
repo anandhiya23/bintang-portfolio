@@ -58,13 +58,15 @@ export default function HeroZoom() {
         gsap.set(media, { clipPath: clipFrom });
         gsap.set(portrait, { scale: scaleFrom, y: yFrom, transformOrigin: "50% 100%" });
 
-        // Entry (after the loader if it runs).
+        // Entry (after the loader if it runs). The loader ends on a copy of
+        // the card in the same spot, so the card only animates in without it.
+        const loader = document.documentElement.classList.contains("intro-lock");
         const intro = gsap.timeline({ paused: true });
+        intro.from(el.querySelectorAll(".lp-hero-word"), { yPercent: 140, duration: 1.2, ease: "power4.out", stagger: 0.08 });
+        // Opacity + lift only: the scroll timeline owns clipPath, and two
+        // tweens on it fight while ScrollTrigger refreshes on load.
+        if (!loader) intro.from(media, { autoAlpha: 0, y: 40, duration: 1.1, ease: "power3.out" }, 0.15);
         intro
-          .from(el.querySelectorAll(".lp-hero-word"), { yPercent: 140, duration: 1.2, ease: "power4.out", stagger: 0.08 })
-          // Opacity + lift only: the scroll timeline owns clipPath, and two
-          // tweens on it fight while ScrollTrigger refreshes on load.
-          .from(media, { autoAlpha: 0, y: 40, duration: 1.1, ease: "power3.out" }, 0.15)
           .from(el.querySelectorAll(".lp-hero-tile-in"), { scale: 0.4, opacity: 0, duration: 1.1, ease: "back.out(1.6)", stagger: 0.07 }, 0.45)
           .from(el.querySelectorAll(".lp-hero-fade"), { opacity: 0, y: 12, duration: 0.8, stagger: 0.06 }, 0.6);
 
@@ -86,10 +88,8 @@ export default function HeroZoom() {
         };
         window.addEventListener("pointermove", onMove);
         const play = () => intro.play();
-        if (document.documentElement.classList.contains("intro-lock")) {
-          window.addEventListener("intro:done", play, { once: true });
-          gsap.delayedCall(1.55, play); // start as the curtain lifts
-        } else play();
+        if (loader) window.addEventListener("intro:done", play, { once: true });
+        else play();
 
         const tl = gsap.timeline({
           defaults: { ease: "none" },
@@ -106,7 +106,9 @@ export default function HeroZoom() {
           .fromTo(portrait, { scale: scaleFrom, y: yFrom }, { scale: 1, y: 0, duration: 0.55, ease: "power2.inOut" }, 0)
           .to(el.querySelector(".lp-hero-l1"), { xPercent: -45, duration: 0.55 }, 0)
           .to(el.querySelector(".lp-hero-l2"), { xPercent: 45, duration: 0.55 }, 0)
-          .to(el.querySelectorAll(".lp-hero-fade"), { opacity: 0, duration: 0.15 }, 0)
+          // fromTo without an initial render: the entry fade owns opacity until the
+          // first scroll, and scrolling back to the top restores full opacity.
+          .fromTo(el.querySelectorAll(".lp-hero-fade"), { opacity: 1 }, { opacity: 0, duration: 0.15, immediateRender: false }, 0)
           .to(el.querySelectorAll(".lp-hero-tile.is-l"), { xPercent: -160, yPercent: -40, rotate: -14, opacity: 0, duration: 0.4, ease: "power2.in", stagger: 0.03 }, 0)
           .to(el.querySelectorAll(".lp-hero-tile.is-r"), { xPercent: 160, yPercent: -40, rotate: 14, opacity: 0, duration: 0.4, ease: "power2.in", stagger: 0.03 }, 0)
           .to(el.querySelector(".lp-hero-shade"), { opacity: 0.9, duration: 0.25 }, 0.5)

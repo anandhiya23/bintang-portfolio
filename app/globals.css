@@ -194,53 +194,104 @@ html.intro-lock { overflow: hidden; }
 /* ── Intro ───────────────────────────────────────────────────────────── */
 
 .lp-intro {
+  --cw: clamp(150px, 22vw, 340px);
   position: fixed;
   inset: 0;
   z-index: 70;
-  display: grid;
-  place-items: center;
-  background: var(--ink);
   color: #f8fafc;
-  animation: lp-intro-failsafe 0s 6s forwards;
+  animation: lp-intro-failsafe 0s 7s forwards;
 }
-.lp-intro::after {
-  content: "";
+@media (max-width: 767px) { .lp-intro { --cw: clamp(150px, 40vw, 340px); } }
+html.intro-skip .lp-intro { display: none; }
+@keyframes lp-intro-failsafe { to { visibility: hidden; } }
+.lp-intro-panel {
   position: absolute;
   left: 0;
   right: 0;
-  top: 100%;
-  height: 14vh;
-  background: var(--or);
+  height: 50.5%;
+  background: var(--ink);
 }
-html.intro-skip .lp-intro { display: none; }
-@keyframes lp-intro-failsafe { to { visibility: hidden; } }
+.lp-intro-top { top: 0; }
+.lp-intro-bot { bottom: 0; }
 .lp-intro-name {
-  font: 800 clamp(4rem, 19vw, 22rem)/0.88 var(--display);
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: 800 clamp(3rem, 17.5vw, 22rem)/0.88 var(--display);
   letter-spacing: -0.01em;
+  white-space: nowrap;
+  translate: 0 2rem;
 }
 .lp-intro-mask {
   display: inline-block;
   overflow: hidden;
-  padding: 0.14em 0.04em 0.16em;
+  padding: 0.14em 0.03em 0.16em;
 }
 .lp-intro-letter { display: inline-block; }
-.lp-intro-label {
+/* Same size and spot as the hero's opening card, so the hand-off is seamless. */
+.lp-intro-card {
   position: absolute;
-  left: var(--pad);
-  bottom: 2rem;
+  left: 50%;
+  top: calc(50% + 2rem);
+  width: var(--cw);
+  aspect-ratio: 1 / 1.28;
+  translate: -50% -50%;
+  overflow: hidden;
+  border-radius: 22px;
+  background: var(--or);
+  box-shadow: 0 40px 80px -30px rgba(0, 0, 0, 0.6);
+}
+.lp-intro-frame {
+  position: absolute;
+  inset: 0;
+  visibility: hidden;
+  opacity: 0;
+}
+.lp-intro-frame.is-portrait { background: var(--or); }
+.lp-intro-frame.is-portrait img {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: auto;
+  height: 96%;
+  max-width: none;
+  translate: -50% 0;
+}
+.lp-intro-meta {
+  position: absolute;
   font: 500 11px/1 var(--mono);
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: #94a3b8;
 }
+.lp-intro-meta.is-tl { left: var(--pad); top: 1.75rem; color: #f8fafc; font-weight: 700; }
+.lp-intro-meta.is-tr { right: var(--pad); top: 1.75rem; }
+.lp-intro-meta.is-bl { left: var(--pad); bottom: 2.25rem; }
 .lp-intro-count {
   position: absolute;
   right: var(--pad);
-  bottom: 1.25rem;
+  bottom: 1.5rem;
   font: 700 clamp(2.5rem, 7vw, 6rem)/1 var(--display);
   letter-spacing: -0.01em;
   color: var(--or);
   font-variant-numeric: tabular-nums;
+}
+.lp-intro-track {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.08);
+}
+.lp-intro-bar {
+  position: absolute;
+  inset: 0;
+  background: var(--or);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
 }
 
 /* ── Hero ────────────────────────────────────────────────────────────── */
