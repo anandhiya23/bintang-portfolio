@@ -89,7 +89,7 @@ export default function ProcessCube() {
           for (let z = -1; z <= 1; z++) {
             const n = Math.abs(x) + Math.abs(y) + Math.abs(z);
             const color = n === 3 ? ORANGE : n === 2 ? (rnd() > 0.55 ? PAPER : ORANGE) : DEEP;
-            const mat = new THREE.MeshStandardMaterial({ color, roughness: 0.38, metalness: 0.05, transparent: true });
+            const mat = new THREE.MeshStandardMaterial({ color, roughness: 1, metalness: 0, transparent: true });
             const mesh = new THREE.Mesh(geo, mat);
             const edge = new THREE.LineBasicMaterial({ color: 0xff5c00, transparent: true });
             mesh.add(new THREE.LineSegments(edgeGeo, edge));
@@ -160,10 +160,10 @@ export default function ProcessCube() {
         state.ty += (state.my - state.ty) * Math.min(1, dt * 4);
         const p = state.p;
 
-        const solid = smooth(0.16, 0.34, p);
-        const burst = smooth(0.2, 0.46, p) * (1 - smooth(0.56, 0.76, p));
-        const twistY = smooth(0.66, 0.8, p) * (Math.PI / 2);
-        const twistX = smooth(0.8, 0.94, p) * (Math.PI / 2);
+        const solid = smooth(0.14, 0.28, p);
+        const burst = smooth(0.22, 0.38, p) * (1 - smooth(0.58, 0.7, p));
+        const twistY = smooth(0.68, 0.77, p) * (Math.PI / 2);
+        const twistX = smooth(0.77, 0.86, p) * (Math.PI / 2);
 
         for (const c of cubies) {
           // Exploded position and tumble.
@@ -183,15 +183,15 @@ export default function ProcessCube() {
           c.mat.opacity = solid;
           c.mat.depthWrite = solid > 0.95;
           c.mesh.visible = true;
-          c.edge.opacity = 1 - smooth(0.3, 0.5, p) * 0.85;
+          c.edge.opacity = 1 - smooth(0.26, 0.42, p) * 0.85;
         }
 
         const idle = reduced ? 0 : now / 1000;
         group.rotation.set(0.5 + state.ty + p * 0.3, -0.6 + idle * 0.12 + p * Math.PI * 1.25 + state.tx, 0);
-        group.scale.setScalar(0.92 + smooth(0.9, 1, p) * 0.08);
+        group.scale.setScalar(0.92 + smooth(0.84, 0.92, p) * 0.08);
         renderer.render(scene, camera);
 
-        const s = p < 0.3 ? 0 : p < 0.62 ? 1 : 2;
+        const s = p < 0.24 ? 0 : p < 0.64 ? 1 : 2;
         if (s !== lastStep) {
           lastStep = s;
           setStep(s);

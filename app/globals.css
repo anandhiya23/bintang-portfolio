@@ -1254,7 +1254,7 @@ html.intro-skip .lp-intro { display: none; }
 
 .lp-proc {
   position: relative;
-  height: 340svh;
+  height: 480svh;
   background:
     radial-gradient(55% 45% at 70% 50%, rgba(255, 92, 0, 0.16), transparent 70%),
     var(--ink);
@@ -1329,33 +1329,4 @@ html.intro-skip .lp-intro { display: none; }
 .lp-proc.is-fallback .lp-proc-stage { display: none; }
 @media (max-width: 899px) {
   .lp-proc.is-static .lp-proc-sticky { padding-top: 70vw; }
-}
-
-/* ── Glossy orange, matching the 3D cubes ────────────────────────────── */
-
-.lp {
-  --gloss:
-    radial-gradient(120% 70% at 28% 0%, rgba(255, 255, 255, 0.42), rgba(255, 255, 255, 0) 58%),
-    linear-gradient(170deg, #ff8a45 0%, #ff5c00 42%, #c94200 100%);
-  --gloss-edge: inset 0 1px 0 rgba(255, 255, 255, 0.55), inset 0 -10px 24px rgba(110, 28, 0, 0.35);
-}
-.lp-hero-media,
-.lp-stack-0,
-.lp-man-pill-in,
-.lp-card-view,
-.lp-btn:not(:hover) {
-  background: var(--gloss);
-}
-.lp-stack-0,
-.lp-card-view,
-.lp-btn:not(:hover) {
-  box-shadow: var(--gloss-edge), 0 18px 40px -22px rgba(201, 66, 0, 0.9);
-}
-.lp-dot { background: radial-gradient(circle at 35% 30%, #ffd2b3, #ff5c00 55%, #b02f00); }
-/* The hero media spans the screen but starts as a small centred card, so its
-   highlight is placed where the card sits. */
-.lp-hero-media {
-  background:
-    radial-gradient(22% 18% at 42% 34%, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0) 100%),
-    linear-gradient(180deg, #ff8a45 0%, #ff6a16 32%, #ff5c00 50%, #c94200 80%, #b02f00 100%);
 }
