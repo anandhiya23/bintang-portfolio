@@ -1,3 +1,4 @@
+import { SITE_URL } from "@/lib/site";
 import type { Metadata } from "next";
 import { Playfair_Display, Inter, Inter_Tight, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
@@ -28,8 +29,17 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: "Bintang Anandhiya — Portfolio",
   description: "Designer-Engineer. Building bridges between design & execution.",
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    siteName: "Bintang Anandhiya",
+    locale: "en_US",
+    url: "/",
+  },
+  twitter: { card: "summary_large_image" },
 };
 
 export default function RootLayout({

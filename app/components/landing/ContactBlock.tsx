@@ -2,11 +2,12 @@
 
 import { useRef, useState } from "react";
 import { gsap, MOTION_OK, useGSAP } from "./motion";
+import { WHATSAPP } from "@/lib/site";
 
 const EMAIL = "bintanganandhiya23@gmail.com";
 
 const CHANNELS = [
-  { label: "WhatsApp", value: "+62 811 892 313", href: "https://wa.me/62811892313" },
+  { label: "WhatsApp", value: "+62 811 892 313", href: `https://wa.me/${WHATSAPP}` },
   { label: "LinkedIn", value: "bintanganandhiya", href: "https://www.linkedin.com/in/bintanganandhiya/" },
   { label: "GitHub", value: "anandhiya23", href: "https://github.com/anandhiya23" },
   { label: "Location", value: "Jakarta, Indonesia", href: null },
@@ -32,16 +33,20 @@ export default function ContactBlock() {
     { scope: root },
   );
 
-  // No backend: compose the message in the visitor's own mail app.
+  // No backend: the form opens a WhatsApp chat with the message already typed.
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const f = new FormData(e.currentTarget);
-    const name = String(f.get("name") ?? "").trim();
-    const from = String(f.get("email") ?? "").trim();
-    const subject = String(f.get("subject") ?? "").trim() || "Hello from your website";
-    const message = String(f.get("message") ?? "").trim();
-    const body = `${message}\n\n— ${name}${from ? ` (${from})` : ""}`;
-    window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    const get = (k: string) => String(f.get(k) ?? "").trim();
+    const name = get("name");
+    const from = get("email");
+    const subject = get("subject");
+    const message = get("message");
+    const lines = [`Hi Bintang, I'm ${name}${from ? ` (${from})` : ""}.`];
+    if (subject) lines.push(`Project: ${subject}`);
+    lines.push("", message);
+    const text = lines.join("\n");
+    window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(text)}`, "_blank", "noopener");
     setSent(true);
   };
 
@@ -105,10 +110,10 @@ export default function ContactBlock() {
             </div>
             <div className="lp-form-row">
               <button type="submit" className="lp-btn">
-                Send message
+                Send on WhatsApp
               </button>
               <p className="lp-form-note" role="status">
-                {sent ? "Your mail app should open with the message ready." : "Opens in your mail app."}
+                {sent ? "WhatsApp should open with your message ready to send." : "Opens WhatsApp with your message typed out."}
               </p>
             </div>
           </form>
