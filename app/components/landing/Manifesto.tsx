@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useRef } from "react";
+import { Fragment, useRef } from "react";
 import { values } from "@/lib/data";
 import { gsap, MOTION_OK, useGSAP } from "./motion";
 
@@ -78,11 +78,15 @@ export default function Manifesto() {
                 {t}{" "}
               </span>
             ) : (
-              <span key={i} className="lp-man-pill" aria-hidden>
-                <span className="lp-man-pill-in">
-                  <Image src={t.img} alt={t.alt} fill sizes="200px" className="object-cover" style={t.pos ? { objectPosition: t.pos } : undefined} />
+              // The space sits outside the pill: a trailing space inside an
+              // inline-block is dropped, which glued the pill to the next word.
+              <Fragment key={i}>
+                <span className="lp-man-pill" aria-hidden>
+                  <span className="lp-man-pill-in">
+                    <Image src={t.img} alt={t.alt} fill sizes="200px" className="object-cover" style={t.pos ? { objectPosition: t.pos } : undefined} />
+                  </span>
                 </span>{" "}
-              </span>
+              </Fragment>
             ),
           )}
         </p>
