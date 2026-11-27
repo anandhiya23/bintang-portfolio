@@ -27,7 +27,7 @@ export default function WorkRail() {
       const bar = el.querySelector<HTMLElement>(".lp-work-progress span")!;
       const count = el.querySelector<HTMLElement>(".lp-work-count b")!;
 
-      mm.add(`(min-width: 900px) and ${MOTION_OK}`, () => {
+      mm.add(MOTION_OK, () => {
         el.classList.add("is-pinned");
         const dist = () => Math.max(0, track.scrollWidth - rail.clientWidth);
         const tween = gsap.to(track, {
