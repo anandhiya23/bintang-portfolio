@@ -28,7 +28,7 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: "Bintang Anandhiya — Portfolio",
-  description: "Designer-Engineer. Building bridges between design & logic.",
+  description: "Designer-Engineer. Building bridges between design & execution.",
 };
 
 export default function RootLayout({

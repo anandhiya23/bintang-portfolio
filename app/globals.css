@@ -151,8 +151,9 @@ html.intro-lock { overflow: hidden; }
   display: inline-block;
   overflow: hidden;
   vertical-align: top;
-  padding-bottom: 0.06em;
-  margin-bottom: -0.06em;
+  /* Room for glyph overhang (italics, wide caps) so the reveal mask never crops letters. */
+  padding: 0.16em 0.12em 0.22em;
+  margin: -0.16em -0.12em -0.22em;
 }
 .lp-mask > span { display: inline-block; }
 .is-serif {
@@ -214,13 +215,13 @@ html.intro-lock { overflow: hidden; }
 html.intro-skip .lp-intro { display: none; }
 @keyframes lp-intro-failsafe { to { visibility: hidden; } }
 .lp-intro-name {
-  font: 800 clamp(4rem, 19vw, 22rem)/0.8 var(--display);
-  letter-spacing: -0.06em;
+  font: 800 clamp(4rem, 19vw, 22rem)/0.88 var(--display);
+  letter-spacing: -0.03em;
 }
 .lp-intro-mask {
   display: inline-block;
   overflow: hidden;
-  padding-bottom: 0.04em;
+  padding: 0.14em 0.04em 0.16em;
 }
 .lp-intro-letter { display: inline-block; }
 .lp-intro-label {
@@ -237,7 +238,7 @@ html.intro-skip .lp-intro { display: none; }
   right: var(--pad);
   bottom: 1.25rem;
   font: 700 clamp(2.5rem, 7vw, 6rem)/1 var(--display);
-  letter-spacing: -0.04em;
+  letter-spacing: -0.022em;
   color: var(--or);
   font-variant-numeric: tabular-nums;
 }
@@ -266,8 +267,8 @@ html.intro-skip .lp-intro { display: none; }
   pointer-events: none;
   text-align: center;
   white-space: nowrap;
-  font: 800 clamp(3.5rem, min(17.5vw, calc((100svh - var(--ch) - 12rem) / 1.7)), 20rem)/0.8 var(--display);
-  letter-spacing: -0.06em;
+  font: 800 clamp(3.5rem, min(17.5vw, calc((100svh - var(--ch) - 12rem) / 1.7)), 20rem)/0.88 var(--display);
+  letter-spacing: -0.03em;
   text-transform: uppercase;
   color: var(--ink);
 }
@@ -308,8 +309,8 @@ html.intro-skip .lp-intro { display: none; }
   padding: 0 5vw;
   text-align: center;
   color: #fff;
-  font: 800 clamp(3rem, 11vw, 12rem)/0.9 var(--display);
-  letter-spacing: -0.05em;
+  font: 800 clamp(3rem, 11vw, 12rem)/0.95 var(--display);
+  letter-spacing: -0.028em;
   text-transform: uppercase;
 }
 .lp-hero-say { display: inline-block; }
@@ -415,7 +416,7 @@ html.intro-skip .lp-intro { display: none; }
   padding-right: 0.45em;
   white-space: nowrap;
   font: 800 clamp(1.75rem, 5vw, 4.75rem)/1 var(--display);
-  letter-spacing: -0.035em;
+  letter-spacing: -0.02em;
   text-transform: uppercase;
 }
 .lp-tick-seq > span.is-outline {
@@ -436,18 +437,18 @@ html.intro-skip .lp-intro { display: none; }
 }
 .lp-man-text {
   font: 700 clamp(2rem, 5.6vw, 6.25rem)/1.02 var(--display);
-  letter-spacing: -0.045em;
+  letter-spacing: -0.025em;
   text-transform: uppercase;
   color: var(--ink);
 }
-.lp-man-pill { display: inline-block; vertical-align: middle; }
+.lp-man-pill { display: inline-block; vertical-align: baseline; }
 .lp-man-pill-in {
+  /* Cap-height tall and sitting on the baseline, so pills line up with the letters. */
   position: relative;
   display: inline-block;
-  width: 1.9em;
-  height: 0.8em;
-  margin-top: -0.14em;
-  vertical-align: middle;
+  width: 1.75em;
+  height: 0.73em;
+  vertical-align: baseline;
   border-radius: 999px;
   overflow: hidden;
   background: var(--or);
@@ -469,7 +470,7 @@ html.intro-skip .lp-intro { display: none; }
 }
 .lp-man-tag-t {
   font: 600 clamp(1.35rem, 2.2vw, 2rem)/1.05 var(--display);
-  letter-spacing: -0.03em;
+  letter-spacing: -0.018em;
   text-transform: uppercase;
   color: var(--ink);
 }
@@ -506,14 +507,14 @@ html.intro-skip .lp-intro { display: none; }
 }
 .lp-work-head .lp-label { grid-column: 1 / -1; }
 .lp-work-title {
-  font: 800 clamp(3.25rem, min(11vw, 15vh), 11rem)/0.84 var(--display);
-  letter-spacing: -0.06em;
+  font: 800 clamp(3.25rem, min(11vw, 15vh), 11rem)/0.9 var(--display);
+  letter-spacing: -0.03em;
   text-transform: uppercase;
   color: var(--ink);
 }
 .lp-work-count {
   font: 600 clamp(1.25rem, 2.2vw, 2.25rem)/1 var(--display);
-  letter-spacing: -0.03em;
+  letter-spacing: -0.018em;
   color: var(--color-outline);
   font-variant-numeric: tabular-nums;
 }
@@ -593,7 +594,7 @@ html.intro-skip .lp-intro { display: none; }
 }
 .lp-card-name {
   font: 600 clamp(1.25rem, 2.1vw, 2rem)/1.05 var(--display);
-  letter-spacing: -0.03em;
+  letter-spacing: -0.018em;
   text-transform: uppercase;
 }
 .lp-card-tags {
@@ -625,7 +626,7 @@ html.intro-skip .lp-intro { display: none; }
   color: var(--ink);
   text-decoration: none;
   font: 800 clamp(1.75rem, 3vw, 3rem)/0.95 var(--display);
-  letter-spacing: -0.045em;
+  letter-spacing: -0.025em;
   text-transform: uppercase;
   transition: background 0.4s, border-color 0.4s;
 }
@@ -673,7 +674,7 @@ html.intro-skip .lp-intro { display: none; }
 }
 .lp-more-name {
   font: 600 clamp(1.4rem, 3.4vw, 3.25rem)/1 var(--display);
-  letter-spacing: -0.04em;
+  letter-spacing: -0.022em;
   text-transform: uppercase;
   transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s;
 }
@@ -740,8 +741,8 @@ html.intro-skip .lp-intro { display: none; }
 }
 .lp-stack-title {
   max-width: 11ch;
-  font: 800 clamp(2.75rem, 8.5vw, 9rem)/0.86 var(--display);
-  letter-spacing: -0.055em;
+  font: 800 clamp(2.75rem, 8.5vw, 9rem)/0.92 var(--display);
+  letter-spacing: -0.03em;
   text-transform: uppercase;
 }
 .lp-stack-bottom {
@@ -780,8 +781,8 @@ html.intro-skip .lp-intro { display: none; }
 .lp-ct .lp-label { color: #94a3b8; }
 .lp-ct-title {
   margin-top: 1.5rem;
-  font: 800 clamp(3.25rem, 11.5vw, 13rem)/0.86 var(--display);
-  letter-spacing: -0.06em;
+  font: 800 clamp(3.25rem, 11.5vw, 13rem)/0.92 var(--display);
+  letter-spacing: -0.03em;
   text-transform: uppercase;
 }
 .lp-ct-grid {
@@ -922,7 +923,7 @@ html.intro-skip .lp-intro { display: none; }
 }
 .lp-foot-line {
   font: 700 clamp(1.4rem, 2.8vw, 2.5rem)/1.05 var(--display);
-  letter-spacing: -0.035em;
+  letter-spacing: -0.02em;
   text-transform: uppercase;
 }
 .lp-foot-line em {
@@ -950,8 +951,8 @@ html.intro-skip .lp-intro { display: none; }
   margin-top: clamp(2rem, 5vw, 4rem);
   text-align: center;
   white-space: nowrap;
-  font: 800 23.5vw/0.76 var(--display);
-  letter-spacing: -0.065em;
+  font: 800 21.5vw/0.86 var(--display);
+  letter-spacing: -0.03em;
   text-transform: uppercase;
 }
 .lp-foot-bottom {
@@ -982,11 +983,15 @@ html.intro-skip .lp-intro { display: none; }
     position: absolute;
     left: 0;
     right: 0;
-    top: calc(4.5rem + 3.25rem);
+    bottom: 1.1rem;
     z-index: 3;
     text-align: center;
-    font: italic 400 clamp(1.5rem, 3vw, 2.5rem)/1 var(--serif);
+    font: italic 400 clamp(1.1rem, 1.6vw, 1.5rem)/1 var(--serif);
     color: var(--ink);
+  }
+  .lp-hero-scrollcue { visibility: hidden; }
+  .lp-hero-line {
+    font-size: clamp(3.5rem, min(17.5vw, calc((100svh - var(--ch) - 15rem) / 1.8)), 20rem);
   }
   .lp-hero-tag em { color: var(--color-primary-dark); }
   .lp-dot,

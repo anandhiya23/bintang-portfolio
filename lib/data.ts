@@ -2,7 +2,7 @@
 
 export const siteConfig = {
   name: "BINTANG.dev",
-  tagline: "Building bridges between design & logic.",
+  tagline: "Building bridges between design & execution.",
   status: "Open to Opportunities",
   philosophy:
     "The screen is a structured, multi-dimensional space where logic meets aesthetic restraint.",

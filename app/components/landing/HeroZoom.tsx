@@ -99,12 +99,12 @@ export default function HeroZoom() {
     { scope: root },
   );
 
-  const say = ["between", "design", "&", "logic."];
+  const say = ["between", "design", "&", "execution."];
 
   return (
     <section id="home" ref={root} className="lp-hero" aria-labelledby="hero-title">
       <h1 id="hero-title" className="sr-only">
-        Bintang Anandhiya, designer-engineer: building bridges between design and logic.
+        Bintang Anandhiya, designer-engineer: building bridges between design and execution.
       </h1>
       <div className="lp-hero-pin">
         <p className="lp-hero-kicker lp-hero-fade" aria-hidden>
@@ -147,7 +147,7 @@ export default function HeroZoom() {
         </div>
 
         <p className="lp-hero-tag" aria-hidden>
-          between <em>design</em> &amp; <em>logic.</em>
+          between <em>design</em> &amp; <em>execution.</em>
         </p>
 
         <div className="lp-hero-foot lp-hero-fade" aria-hidden>
