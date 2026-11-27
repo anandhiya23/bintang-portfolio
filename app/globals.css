@@ -26,6 +26,25 @@ body {
   background: color-mix(in srgb, var(--color-primary) 20%, transparent);
   color: var(--color-primary);
 }
+/* On orange grounds the default (orange text) would vanish; invert to ink. */
+.lp-foot ::selection,
+.lp-stack-0 ::selection,
+.lp-tick-row ::selection,
+.lp-hero-media ::selection,
+.lp-card-view ::selection,
+.lp-btn ::selection,
+.lp-man-pill-in ::selection {
+  background: var(--ink);
+  color: #fff;
+}
+/* On ink grounds use a solid orange highlight with ink text. */
+.lp-proc ::selection,
+.lp-ct ::selection,
+.cs-next ::selection,
+.lp-tick-row + .lp-tick-row ::selection {
+  background: var(--or);
+  color: var(--ink);
+}
 
 .font-headline {
   font-family: var(--font-headline);

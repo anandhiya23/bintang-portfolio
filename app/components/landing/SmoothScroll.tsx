@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 import Lenis from "lenis";
 import { gsap, ScrollTrigger } from "./motion";
 
@@ -9,8 +10,24 @@ import { gsap, ScrollTrigger } from "./motion";
  * scrubs stay in lockstep. Off for prefers-reduced-motion.
  */
 export default function SmoothScroll() {
+  const pathname = usePathname();
+
+  // Every new page (including project → next project, which reuses this
+  // component) starts at its top.
+  useEffect(() => {
+    if (location.hash) return;
+    const w = window as unknown as { __lenis?: Lenis };
+    window.scrollTo(0, 0);
+    w.__lenis?.scrollTo(0, { immediate: true, force: true });
+    ScrollTrigger.refresh();
+  }, [pathname]);
+
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    // Pages here are built around pinned, scroll-driven sections, so always
+    // open a page at its top (unless a #section is asked for) instead of
+    // restoring an old scroll position.
+    if ("scrollRestoration" in history) history.scrollRestoration = "manual";
     const lenis = new Lenis({ lerp: 0.09, smoothWheel: true, anchors: { offset: -64 } });
     const w = window as unknown as { __lenis?: Lenis };
     w.__lenis = lenis;
